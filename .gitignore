@@ -8,3 +8,17 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Test cache
+.pytest_cache/
+
+# Ruff cache
+.ruff_cache/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
