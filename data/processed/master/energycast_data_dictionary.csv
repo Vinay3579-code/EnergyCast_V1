@@ -1,0 +1,19 @@
+column,description,source
+timestamp,Hourly timestamp in IST,All sources
+mcp_rs_per_mwh,IEX Market Clearing Price (Rs/MWh),IEX
+weighted_mcp_rs_per_mwh,Weighted IEX MCP,IEX
+purchase_bid_mwh,IEX purchase bid volume,IEX
+sell_bid_mwh,IEX sell bid volume,IEX
+mcv_mwh,IEX Market Cleared Volume,IEX
+final_scheduled_volume_mwh,IEX final scheduled volume,IEX
+demand_mw,All-India electricity demand,Grid India
+wind_generation_mw,All-India wind generation,Grid India
+solar_generation_mw,All-India solar generation,Grid India
+temperature_mean_c,Mean temperature across selected Indian cities,ERA5/Open-Meteo
+temperature_max_c,Maximum temperature across selected cities,ERA5/Open-Meteo
+temperature_min_c,Minimum temperature across selected cities,ERA5/Open-Meteo
+humidity_mean_pct,Mean relative humidity,ERA5/Open-Meteo
+apparent_temperature_mean_c,Mean apparent temperature,ERA5/Open-Meteo
+weather_wind_speed_mean_ms,Mean weather wind speed,ERA5/Open-Meteo
+precipitation_mean_mm,Mean precipitation,ERA5/Open-Meteo
+precipitation_max_mm,Maximum precipitation,ERA5/Open-Meteo
