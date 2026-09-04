@@ -1,62 +1,21 @@
 from pathlib import Path
+import calendar
 import pandas as pd
 
 # ============================================================
-# EnergyCast V1 - Merge IEX Day-Ahead Market monthly files
-# Expected raw structure:
-#
-# data/raw/iex/
-#   2022/*.xlsx
-#   2023/*.xlsx
-#   2024/*.xlsx
-#   2025/*.xlsx
-#
-# IEX export format:
-# Row 1 : blank
-# Row 2 : "Market Snapshot"
-# Row 3 : date-range metadata
-# Row 4 : blank
-# Row 5 : actual column headers
+# EnergyCast V1 - Clean IEX DAM Hourly Merger
+# Designed for:
+# EnergyCast_V1/
+#   data/raw/iex/2022...2025/*.xlsx
+#   src/energycast_v1/merge_iex_data.py
 # ============================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 RAW_DIR = PROJECT_ROOT / "data" / "raw" / "iex"
-OUTPUT_DIR = PROJECT_ROOT / "data" / "processed" / "iex"
-
+OUTPUT_DIR = Path("V:/College/7th SEM/SDP/EnergyCast_V1/data/processed/iex")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
-# ------------------------------------------------------------
-# 1. Find all monthly Excel files recursively
-# ------------------------------------------------------------
-files = sorted(RAW_DIR.rglob("*.xlsx"))
-
-print("=" * 70)
-print("ENERGYCAST V1 - IEX DATA MERGER")
-print("=" * 70)
-print(f"Raw directory : {RAW_DIR}")
-print(f"Files found   : {len(files)}")
-
-if not files:
-    raise FileNotFoundError(
-        f"\nNo .xlsx files were found inside:\n{RAW_DIR}\n"
-        "Place the monthly IEX files under data/raw/iex/<year>/"
-    )
-
-# Your expected total is 45 files:
-# Apr-Dec 2022 = 9
-# 2023 = 12
-# 2024 = 12
-# 2025 = 12
-if len(files) != 45:
-    print(
-        f"\nWARNING: Expected 45 monthly files, but found {len(files)}."
-        "\nThe merge will continue, but verify that no month is missing."
-    )
-
-# ------------------------------------------------------------
-# 2. Expected IEX columns
-# ------------------------------------------------------------
-expected_columns = [
+EXPECTED_COLUMNS = [
     "Date",
     "Hour",
     "Purchase Bid (MWh)",
@@ -67,88 +26,172 @@ expected_columns = [
     "Weighted MCP (Rs/MWh)",
 ]
 
-frames = []
-failed_files = []
+MONTH_MAP = {
+    "jan": 1,
+    "feb": 2,
+    "march": 3,
+    "mar": 3,
+    "april": 4,
+    "apr": 4,
+    "may": 5,
+    "june": 6,
+    "jun": 6,
+    "july": 7,
+    "jul": 7,
+    "aug": 8,
+    "sep": 9,
+    "sept": 9,
+    "oct": 10,
+    "nov": 11,
+    "dec": 12,
+}
 
-# ------------------------------------------------------------
-# 3. Read every monthly file
-# ------------------------------------------------------------
-for i, file in enumerate(files, start=1):
-    print(f"[{i:02d}/{len(files)}] Reading: {file.relative_to(RAW_DIR)}")
+print("=" * 72)
+print("ENERGYCAST V1 - IEX DAM HOURLY DATA VALIDATOR + MERGER")
+print("=" * 72)
+print(f"Project root : {PROJECT_ROOT}")
+print(f"Raw folder   : {RAW_DIR}")
+
+files = sorted(RAW_DIR.rglob("*.xlsx"))
+
+print(f"Excel files found: {len(files)}")
+
+if len(files) != 45:
+    raise RuntimeError(
+        f"Expected 45 monthly files (Apr 2022-Dec 2025), found {len(files)}."
+    )
+
+frames = []
+validation_rows = []
+errors = []
+
+for idx, file in enumerate(files, start=1):
+    year_text = file.parent.name
+    month_text = file.stem.lower()
 
     try:
-        # IEX's actual header is on Excel row 5 -> pandas header=4
-        df = pd.read_excel(
-            file,
-            sheet_name=0,
-            header=4,
-            engine="openpyxl"
+        expected_year = int(year_text)
+    except ValueError:
+        errors.append(f"{file}: parent folder is not a numeric year.")
+        continue
+
+    expected_month = MONTH_MAP.get(month_text)
+
+    if expected_month is None:
+        errors.append(f"{file}: cannot infer month from filename '{file.stem}'.")
+        continue
+
+    df = pd.read_excel(
+        file,
+        sheet_name=0,
+        header=4,
+        engine="openpyxl",
+    )
+
+    df = df.dropna(how="all").dropna(axis=1, how="all")
+    df.columns = [str(c).strip() for c in df.columns]
+
+    missing_cols = [c for c in EXPECTED_COLUMNS if c not in df.columns]
+    if missing_cols:
+        errors.append(f"{file}: missing columns {missing_cols}")
+        continue
+
+    df = df[EXPECTED_COLUMNS].copy()
+
+    # --------------------------------------------------------
+    # CRITICAL:
+    # IEX monthly exports contain extra rows such as:
+    # Total, Max, Min, Avg and Summary.
+    # Only Hour 1...24 are actual hourly market observations.
+    # --------------------------------------------------------
+    numeric_hour = pd.to_numeric(df["Hour"], errors="coerce")
+    hourly = df.loc[numeric_hour.between(1, 24)].copy()
+    hourly["Hour"] = pd.to_numeric(hourly["Hour"], errors="raise").astype(int)
+
+    hourly["Date"] = pd.to_datetime(
+        hourly["Date"],
+        dayfirst=True,
+        errors="coerce",
+    )
+
+    invalid_dates = int(hourly["Date"].isna().sum())
+
+    expected_days = calendar.monthrange(expected_year, expected_month)[1]
+    expected_rows = expected_days * 24
+
+    actual_min = hourly["Date"].min()
+    actual_max = hourly["Date"].max()
+
+    correct_year_month = (
+        invalid_dates == 0
+        and actual_min is not pd.NaT
+        and actual_max is not pd.NaT
+        and actual_min.year == expected_year
+        and actual_max.year == expected_year
+        and actual_min.month == expected_month
+        and actual_max.month == expected_month
+    )
+
+    correct_row_count = len(hourly) == expected_rows
+
+    status = "OK" if (correct_year_month and correct_row_count) else "FAIL"
+
+    validation_rows.append(
+        {
+            "source_file": str(file.relative_to(RAW_DIR)),
+            "expected_year": expected_year,
+            "expected_month": expected_month,
+            "actual_start_date": actual_min,
+            "actual_end_date": actual_max,
+            "expected_hourly_rows": expected_rows,
+            "actual_hourly_rows": len(hourly),
+            "invalid_dates": invalid_dates,
+            "status": status,
+        }
+    )
+
+    print(
+        f"[{idx:02d}/45] {file.relative_to(RAW_DIR)} -> "
+        f"{len(hourly):4d}/{expected_rows:4d} hourly rows -> {status}"
+    )
+
+    if status == "FAIL":
+        errors.append(
+            f"{file.relative_to(RAW_DIR)}: expected "
+            f"{expected_year}-{expected_month:02d}, "
+            f"but data range is {actual_min} to {actual_max}, "
+            f"rows={len(hourly)} (expected {expected_rows})."
         )
+        continue
 
-        # Remove totally empty rows/columns
-        df = df.dropna(how="all")
-        df = df.dropna(axis=1, how="all")
+    hourly["source_year"] = expected_year
+    hourly["source_file"] = file.name
+    frames.append(hourly)
 
-        # Clean header whitespace
-        df.columns = [str(c).strip() for c in df.columns]
+# Save validation report even if a bad source file is found.
+validation_df = pd.DataFrame(validation_rows)
+validation_path = OUTPUT_DIR / "iex_monthly_validation.csv"
+validation_df.to_csv(validation_path, index=False)
 
-        missing = [c for c in expected_columns if c not in df.columns]
+print(f"\nValidation report saved:\n{validation_path}")
 
-        if missing:
-            print(f"    ERROR: Missing columns: {missing}")
-            print(f"    Found columns: {list(df.columns)}")
-            failed_files.append(str(file))
-            continue
+if errors:
+    print("\n" + "=" * 72)
+    print("SOURCE DATA VALIDATION FAILED")
+    print("=" * 72)
+    for err in errors:
+        print(" -", err)
 
-        # Keep only the 8 expected IEX columns.
-        # This prevents accidental unnamed/export columns from entering dataset.
-        df = df[expected_columns].copy()
-
-        # Traceability
-        df["source_file"] = file.name
-        df["source_year"] = file.parent.name
-
-        frames.append(df)
-
-        print(f"    Loaded {len(df):,} rows")
-
-    except Exception as e:
-        print(f"    ERROR: {e}")
-        failed_files.append(str(file))
-
-if not frames:
-    raise RuntimeError("None of the IEX Excel files could be loaded.")
-
-if failed_files:
-    print("\nFiles that failed:")
-    for f in failed_files:
-        print(" -", f)
     raise RuntimeError(
-        "\nSome files failed validation. Fix them before creating the final dataset."
+        "\nFix the source file(s) listed above and rerun the script. "
+        "No final master dataset was produced."
     )
 
 # ------------------------------------------------------------
-# 4. Concatenate all months
+# Merge only validated hourly rows
 # ------------------------------------------------------------
 combined = pd.concat(frames, ignore_index=True)
 
-print("\n" + "=" * 70)
-print("MERGE SUMMARY")
-print("=" * 70)
-print(f"Rows after concatenation : {len(combined):,}")
-print(f"Columns                  : {len(combined.columns)}")
-
-# ------------------------------------------------------------
-# 5. Preserve a raw-combined CSV before transformations
-# ------------------------------------------------------------
-raw_combined_path = OUTPUT_DIR / "iex_dam_hourly_master_raw.csv"
-combined.to_csv(raw_combined_path, index=False)
-
-print(f"\nRaw combined file saved:\n{raw_combined_path}")
-
-# ------------------------------------------------------------
-# 6. Standardize names for modeling
-# ------------------------------------------------------------
 combined = combined.rename(
     columns={
         "Purchase Bid (MWh)": "purchase_bid_mwh",
@@ -160,52 +203,6 @@ combined = combined.rename(
     }
 )
 
-# ------------------------------------------------------------
-# 7. Parse Date and Hour
-# ------------------------------------------------------------
-combined["Date"] = pd.to_datetime(
-    combined["Date"],
-    dayfirst=True,
-    errors="coerce"
-)
-
-combined["Hour"] = pd.to_numeric(
-    combined["Hour"],
-    errors="coerce"
-)
-
-invalid_date_rows = combined["Date"].isna().sum()
-invalid_hour_rows = combined["Hour"].isna().sum()
-
-print(f"\nInvalid date rows : {invalid_date_rows}")
-print(f"Invalid hour rows : {invalid_hour_rows}")
-
-# IEX hourly exports use Hour = 1...24.
-bad_hours = combined.loc[
-    ~combined["Hour"].between(1, 24, inclusive="both"),
-    ["Date", "Hour", "source_file"]
-]
-
-if len(bad_hours) > 0:
-    print("\nWARNING: Rows with Hour outside 1-24:")
-    print(bad_hours.head(20).to_string(index=False))
-
-# ------------------------------------------------------------
-# 8. Create an hourly timestamp
-#
-# Hour 1  -> 00:00
-# Hour 2  -> 01:00
-# ...
-# Hour 24 -> 23:00
-# ------------------------------------------------------------
-combined["timestamp"] = (
-    combined["Date"]
-    + pd.to_timedelta(combined["Hour"] - 1, unit="h")
-)
-
-# ------------------------------------------------------------
-# 9. Convert market columns to numeric
-# ------------------------------------------------------------
 numeric_columns = [
     "purchase_bid_mwh",
     "sell_bid_mwh",
@@ -218,56 +215,78 @@ numeric_columns = [
 for col in numeric_columns:
     combined[col] = pd.to_numeric(combined[col], errors="coerce")
 
-# ------------------------------------------------------------
-# 10. Sort chronologically
-# ------------------------------------------------------------
+# IEX Hour 1 = 00:00-01:00, Hour 24 = 23:00-24:00.
+combined["timestamp"] = (
+    combined["Date"]
+    + pd.to_timedelta(combined["Hour"] - 1, unit="h")
+)
+
 combined = combined.sort_values("timestamp").reset_index(drop=True)
 
 # ------------------------------------------------------------
-# 11. Quality checks
+# Strict final quality checks
 # ------------------------------------------------------------
-duplicate_timestamps = combined["timestamp"].duplicated(keep=False)
-duplicate_count = int(duplicate_timestamps.sum())
+EXPECTED_START = pd.Timestamp("2022-04-01 00:00:00")
+EXPECTED_END = pd.Timestamp("2025-12-31 23:00:00")
 
-print("\n" + "=" * 70)
-print("QUALITY CHECK")
-print("=" * 70)
+expected_timeline = pd.date_range(
+    EXPECTED_START,
+    EXPECTED_END,
+    freq="h",
+)
 
-print(f"First timestamp       : {combined['timestamp'].min()}")
-print(f"Last timestamp        : {combined['timestamp'].max()}")
-print(f"Duplicate timestamps  : {duplicate_count}")
-print(f"Missing MCP values    : {combined['mcp_rs_per_mwh'].isna().sum():,}")
+duplicate_mask = combined["timestamp"].duplicated(keep=False)
+duplicate_rows = int(duplicate_mask.sum())
 
-if duplicate_count:
-    duplicate_path = OUTPUT_DIR / "iex_duplicate_timestamps.csv"
-    combined.loc[duplicate_timestamps].to_csv(duplicate_path, index=False)
-    print(f"Duplicate rows exported to:\n{duplicate_path}")
+actual_timestamps = pd.DatetimeIndex(combined["timestamp"])
+missing_timestamps = expected_timeline.difference(actual_timestamps)
 
-# Expected hourly timeline
-valid_time = combined["timestamp"].dropna()
+extra_timestamps = actual_timestamps.difference(expected_timeline)
 
-if not valid_time.empty:
-    expected_timestamps = pd.date_range(
-        start=valid_time.min(),
-        end=valid_time.max(),
-        freq="h"
+missing_mcp = int(combined["mcp_rs_per_mwh"].isna().sum())
+
+print("\n" + "=" * 72)
+print("FINAL QUALITY CHECK")
+print("=" * 72)
+print(f"Rows                    : {len(combined):,}")
+print(f"Expected rows           : {len(expected_timeline):,}")
+print(f"First timestamp         : {combined['timestamp'].min()}")
+print(f"Last timestamp          : {combined['timestamp'].max()}")
+print(f"Duplicate hourly rows   : {duplicate_rows}")
+print(f"Missing hourly timestamps: {len(missing_timestamps)}")
+print(f"Extra timestamps        : {len(extra_timestamps)}")
+print(f"Missing hourly MCP      : {missing_mcp}")
+
+quality_errors = []
+
+if len(combined) != len(expected_timeline):
+    quality_errors.append(
+        f"row count {len(combined)} != expected {len(expected_timeline)}"
     )
 
-    actual_timestamps = pd.DatetimeIndex(valid_time.unique())
-    missing_timestamps = expected_timestamps.difference(actual_timestamps)
+if duplicate_rows:
+    quality_errors.append(f"{duplicate_rows} duplicate hourly rows")
 
-    print(f"Missing hourly timestamps: {len(missing_timestamps):,}")
+if len(missing_timestamps):
+    quality_errors.append(
+        f"{len(missing_timestamps)} missing hourly timestamps"
+    )
 
-    if len(missing_timestamps):
-        missing_path = OUTPUT_DIR / "iex_missing_timestamps.csv"
-        pd.DataFrame({"missing_timestamp": missing_timestamps}).to_csv(
-            missing_path,
-            index=False
-        )
-        print(f"Missing timestamps exported to:\n{missing_path}")
+if len(extra_timestamps):
+    quality_errors.append(
+        f"{len(extra_timestamps)} timestamps outside expected range"
+    )
+
+if missing_mcp:
+    quality_errors.append(f"{missing_mcp} hourly MCP values are missing")
+
+if quality_errors:
+    raise RuntimeError(
+        "Final quality check failed: " + "; ".join(quality_errors)
+    )
 
 # ------------------------------------------------------------
-# 12. Reorder columns
+# Final clean master output
 # ------------------------------------------------------------
 final_columns = [
     "timestamp",
@@ -285,16 +304,20 @@ final_columns = [
 
 combined = combined[final_columns]
 
-# ------------------------------------------------------------
-# 13. Export clean master dataset
-# ------------------------------------------------------------
 final_path = OUTPUT_DIR / "iex_dam_hourly_2022_2025.csv"
-
 combined.to_csv(final_path, index=False)
 
-print("\n" + "=" * 70)
-print("DONE")
-print("=" * 70)
-print(f"Final rows : {len(combined):,}")
-print(f"Final file :\n{final_path}")
-print("\nDo NOT manually edit this file. Regenerate it from the raw files.")
+# Remove stale diagnostic files from the older merger if they exist.
+for stale_name in [
+    "iex_duplicate_timestamps.csv",
+    "iex_missing_timestamps.csv",
+]:
+    stale_path = OUTPUT_DIR / stale_name
+    if stale_path.exists():
+        stale_path.unlink()
+
+print("\n" + "=" * 72)
+print("SUCCESS")
+print("=" * 72)
+print(f"Clean master dataset:\n{final_path}")
+print("\nIEX price-data Step 1 has passed all validation checks.")
