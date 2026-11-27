@@ -424,8 +424,15 @@
   // --------------------------------------------------------------------------
   // 6. HYBRID DATA ACCESS LAYER (LIVE API OR EMBEDDED OFFLINE BUNDLE)
   // --------------------------------------------------------------------------
+  function isStaticHost() {
+    return (
+      window.location.protocol === "file:" ||
+      window.location.hostname.endsWith("github.io")
+    );
+  }
+
   async function fetchApiOrEmbedded(url, fallbackFn) {
-    if (window.location.protocol !== "file:") {
+    if (!isStaticHost()) {
       try {
         const res = await fetch(url);
         if (res.ok) return await res.json();
@@ -1472,7 +1479,7 @@
     };
 
     let simData = null;
-    if (window.location.protocol !== "file:") {
+    if (!isStaticHost()) {
       try {
         const resp = await fetch("/api/simulate", {
           method: "POST",

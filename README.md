@@ -8,6 +8,9 @@ Harmonizing **28,344 hourly records** (April 2022 – June 2025) across **IEX DA
 
 ## Quick Launch: Interactive Web Command Center
 
+### Live Online Demo (GitHub Pages)
+* Open **[https://vinay3579-code.github.io/EnergyCast_V1/](https://vinay3579-code.github.io/EnergyCast_V1/)** directly in any browser (auto-deployed from `app/static/` via GitHub Actions).
+
 ### Mode A: Live Python Multi-Model & Real-Time Stress-Testing Server *(Recommended)*
 ```powershell
 uv run python app/main.py --open
