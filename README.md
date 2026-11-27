@@ -2,7 +2,7 @@
 
 **Causality-Aware Electricity Price Forecasting, Probabilistic Risk Quantification & Stochastic CVaR Procurement Optimization for the Indian Energy Exchange (IEX DAM)**
 
-[![Live Web UI](https://img.shields.io/badge/Live_Demo-GitHub_Pages-0D9488?style=for-the-badge)](https://vinay3579-code.github.io/EnergyCast_V1/)
+[![Live Web UI](https://img.shields.io/badge/Live_Demo-GitHub_Pages-0D9488?style=for-the-badge)](https://vinay3579-code.github.io/EnergyCast/)
 [![Python 3.12](https://img.shields.io/badge/Python-3.12-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-TFT_%26_N--BEATS-EE4C2C?style=for-the-badge&logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![LightGBM](https://img.shields.io/badge/GBDT-LightGBM_%7C_XGBoost_%7C_CatBoost-16A34A?style=for-the-badge)](https://lightgbm.readthedocs.io/)
@@ -15,7 +15,7 @@ EnergyCast is an end-to-end decision-support platform for **State DISCOMs**, **o
 
 Explore the 4-tab trading command center (175 unseen 2025 test days, 4,200 hours):
 
-* **Online Demo:** [https://vinay3579-code.github.io/EnergyCast_V1/](https://vinay3579-code.github.io/EnergyCast_V1/)
+* **Online Demo:** [https://vinay3579-code.github.io/EnergyCast/](https://vinay3579-code.github.io/EnergyCast/)
 * **Local Full-Stack Server (live Python ML + TreeSHAP inference):**
   ```bash
   uv sync
