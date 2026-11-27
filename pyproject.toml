@@ -8,17 +8,22 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "joblib>=1.6.0",
+    "lightgbm>=4.7.0",
+    "matplotlib>=3.11.2",
     "openpyxl>=3.1.5",
     "pandas>=3.0.5",
+    "python-docx>=1.2.0",
     "requests>=2.34.2",
+    "scikit-learn>=1.9.1",
+    "scipy>=1.18.1",
+    "seaborn>=0.13.2",
+    "statsmodels>=0.15.0",
+    "xgboost>=3.4.1",
 ]
 
-[project.scripts]
-energycast-v1 = "energycast_v1:main"
-
-[build-system]
-requires = ["uv_build>=0.12.0,<0.13.0"]
-build-backend = "uv_build"
+[tool.uv]
+package = false
 
 [dependency-groups]
 dev = [

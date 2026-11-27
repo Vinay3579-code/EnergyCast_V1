@@ -1,0 +1,19 @@
+Metric,Value
+Observations (count),"28,344"
+Mean (Rs/MWh),5163.84
+Standard Deviation (Rs/MWh),2888.08
+Median (Rs/MWh),3998.62
+Minimum (Rs/MWh),99.33
+25th Percentile (Q1) (Rs/MWh),3105.18
+75th Percentile (Q3) (Rs/MWh),6573.86
+Interquartile Range (IQR),3468.68
+90th Percentile (Rs/MWh),10000.00
+95th Percentile (Rs/MWh),10350.51
+99th Percentile (Rs/MWh),12000.00
+Maximum (Rs/MWh),20000.00
+Skewness (Fisher-Pearson),1.0093
+Kurtosis (Excess),-0.1422
+"Regulatory Cap Hits (>= Rs 10,000)","4,415"
+Cap Hit Percentage (%),15.58%
+"Severe Spikes (>= Rs 12,000)","1,091"
+"Historical Cap Hits (== Rs 20,000)",1

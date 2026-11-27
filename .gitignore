@@ -22,3 +22,7 @@ wheels/
 # OS
 .DS_Store
 Thumbs.db
+
+# Training & scratch artifacts
+catboost_info/
+scratch/

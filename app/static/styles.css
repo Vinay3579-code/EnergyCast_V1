@@ -1,0 +1,985 @@
+/* ==========================================================================
+   ENERGYCAST // COMMERCIAL POWER MARKET INTELLIGENCE & BIDDING PLATFORM
+   Product Design System: Clean B2B EnergyTech SaaS (Amperon / Stripe / Linear)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  /* Light Mode Product Palette (Clean Slate & Crisp White Surfaces) */
+  --bg-app: #F4F6F9;
+  --bg-card: #FFFFFF;
+  --bg-subtle: #F8FAFC;
+  --bg-hover: #F1F5F9;
+  --bg-pill: #EEF2F6;
+
+  --text-main: #0F172A;
+  --text-secondary: #475569;
+  --text-muted: #64748B;
+  --text-on-brand: #FFFFFF;
+
+  --border-light: #E2E8F0;
+  --border-strong: #CBD5E1;
+
+  /* Energy Product Semantic Colors */
+  --brand-primary: #0D9488;        /* Clean Energy Teal */
+  --brand-primary-soft: rgba(13, 148, 136, 0.10);
+  --brand-dark: #0F766E;
+
+  --accent-solar: #F59E0B;         /* Solar Amber */
+  --accent-solar-soft: rgba(245, 158, 11, 0.12);
+
+  --accent-peak: #E11D48;          /* Peak Scarcity Coral-Red */
+  --accent-peak-soft: rgba(225, 29, 72, 0.10);
+
+  --accent-grid: #2563EB;          /* Grid / Demand Blue */
+  --accent-grid-soft: rgba(37, 99, 235, 0.10);
+
+  --accent-good: #10B981;          /* Savings / Optimal Buy Green */
+  --accent-good-soft: rgba(16, 185, 129, 0.12);
+
+  --chart-grid: #E2E8F0;
+  --chart-axis: #64748B;
+
+  --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.04);
+  --shadow-md: 0 4px 12px rgba(15, 23, 42, 0.06);
+  --shadow-pop: 0 10px 25px -4px rgba(15, 23, 42, 0.15), 0 4px 10px -2px rgba(15, 23, 42, 0.08);
+
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Consolas', monospace;
+}
+
+[data-theme="dark"] {
+  --bg-app: #0B0F17;
+  --bg-card: #111827;
+  --bg-subtle: #161F30;
+  --bg-hover: #1E293B;
+  --bg-pill: #1E293B;
+
+  --text-main: #F8FAFC;
+  --text-secondary: #94A3B8;
+  --text-muted: #64748B;
+
+  --border-light: #1E293B;
+  --border-strong: #334155;
+
+  --brand-primary: #14B8A6;
+  --brand-primary-soft: rgba(20, 184, 166, 0.15);
+
+  --accent-solar: #FBBF24;
+  --accent-solar-soft: rgba(251, 191, 36, 0.14);
+
+  --accent-peak: #F43F5E;
+  --accent-peak-soft: rgba(244, 63, 94, 0.15);
+
+  --accent-grid: #3B82F6;
+  --accent-grid-soft: rgba(59, 130, 246, 0.15);
+
+  --accent-good: #34D399;
+  --accent-good-soft: rgba(52, 211, 153, 0.14);
+
+  --chart-grid: #1E293B;
+  --chart-axis: #94A3B8;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+  --shadow-pop: 0 12px 28px rgba(0, 0, 0, 0.65);
+}
+
+/* ==========================================================================
+   RESET & BASE TYPOGRAPHY
+   ========================================================================== */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  background-color: var(--bg-app);
+  color: var(--text-main);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.num, .mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ==========================================================================
+   TOP PRODUCT NAVIGATION BAR
+   ========================================================================== */
+
+.product-navbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background-color: var(--bg-card);
+  border-bottom: 1px solid var(--border-light);
+  box-shadow: var(--shadow-sm);
+}
+
+.navbar-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.brand-identity {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.brand-mark {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: var(--brand-primary);
+  color: #FFFFFF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 16px;
+  letter-spacing: -0.03em;
+}
+
+.brand-name {
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--text-main);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.market-badge {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 99px;
+  background-color: var(--brand-primary-soft);
+  color: var(--brand-primary);
+}
+
+/* Center Product Navigation Tabs */
+.nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: var(--bg-pill);
+  padding: 4px;
+  border-radius: var(--radius-md);
+}
+
+.nav-tab {
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-tab:hover {
+  color: var(--text-main);
+}
+
+.nav-tab.active {
+  background-color: var(--bg-card);
+  color: var(--brand-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Global Date & Quick Regime Context Bar */
+.context-bar {
+  background-color: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-light);
+}
+
+.context-bar-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 10px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.date-selector-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.context-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.ui-select, .ui-btn, .ui-input {
+  font-family: var(--font-sans);
+  font-size: 13px;
+  font-weight: 500;
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  outline: none;
+}
+
+.ui-select:hover, .ui-btn:hover {
+  border-color: var(--brand-primary);
+}
+
+.ui-btn.icon-btn {
+  padding: 6px 9px;
+}
+
+.ui-btn.primary {
+  background-color: var(--brand-primary);
+  color: #FFFFFF;
+  border-color: var(--brand-primary);
+  font-weight: 600;
+}
+
+.ui-btn.primary:hover {
+  background-color: var(--brand-dark);
+}
+
+.scenario-chips {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.scenario-chip {
+  font-size: 12px;
+  font-weight: 500;
+  padding: 5px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--border-light);
+  background-color: var(--bg-card);
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.scenario-chip:hover {
+  border-color: var(--brand-primary);
+  color: var(--text-main);
+}
+
+.scenario-chip.active {
+  background-color: var(--brand-primary-soft);
+  border-color: var(--brand-primary);
+  color: var(--brand-primary);
+  font-weight: 600;
+}
+
+.chip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+}
+
+/* ==========================================================================
+   MAIN CONTAINER & GRID LAYOUTS
+   ========================================================================== */
+
+.app-container {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 20px 24px 56px;
+}
+
+.tab-pane {
+  display: none;
+}
+
+.tab-pane.active {
+  display: block;
+}
+
+/* Market Advisory Banner */
+.advisory-banner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-left: 4px solid var(--brand-primary);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 18px;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.advisory-banner.high-alert {
+  border-left-color: var(--accent-peak);
+}
+
+.advisory-main {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.advisory-badge {
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  background-color: var(--brand-primary-soft);
+  color: var(--brand-primary);
+  white-space: nowrap;
+}
+
+.advisory-banner.high-alert .advisory-badge {
+  background-color: var(--accent-peak-soft);
+  color: var(--accent-peak);
+}
+
+.advisory-text h2 {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.advisory-text p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+/* 4-Card Executive Metric Row */
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 18px;
+}
+
+.metric-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  padding: 16px 18px;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.metric-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.metric-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.metric-pill {
+  font-size: 11px;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 99px;
+}
+
+.metric-pill.good { background: var(--accent-good-soft); color: var(--accent-good); }
+.metric-pill.peak { background: var(--accent-peak-soft); color: var(--accent-peak); }
+.metric-pill.solar { background: var(--accent-solar-soft); color: var(--accent-solar); }
+.metric-pill.info { background: var(--accent-grid-soft); color: var(--accent-grid); }
+
+.metric-val {
+  font-family: var(--font-mono);
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.metric-unit {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.metric-foot {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 6px;
+}
+
+/*Aligned Product Cards & Grids */
+.layout-main-sidebar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(0, 1fr);
+  gap: 18px;
+  margin-bottom: 18px;
+  align-items: stretch;
+}
+
+.layout-2col {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 18px;
+  margin-bottom: 18px;
+  align-items: stretch;
+}
+
+.layout-sim {
+  display: grid;
+  grid-template-columns: 370px minmax(0, 1fr);
+  gap: 18px;
+  margin-bottom: 18px;
+  align-items: start;
+}
+
+.product-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.card-title {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.card-subtitle {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.card-body {
+  padding: 18px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-body.flush {
+  padding: 0;
+}
+
+/* ==========================================================================
+   CONSTRAINED CHART WRAPPERS & LEGEND CONTROLS
+   ========================================================================== */
+
+.chart-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background-color: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-light);
+  font-size: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.legend-group {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.legend-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.swatch-line {
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.swatch-box {
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  display: inline-block;
+}
+
+.chart-box {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.chart-box.h-290 { height: 290px; }
+.chart-box.h-250 { height: 250px; }
+.chart-box.h-270 { height: 270px; }
+
+canvas.product-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+}
+
+/* 24-Hour Interactive Timeline Bar */
+.hour-timeline {
+  display: grid;
+  grid-template-columns: repeat(24, 1fr);
+  border-top: 1px solid var(--border-light);
+  background-color: var(--bg-subtle);
+}
+
+.hour-btn {
+  border: none;
+  border-right: 1px solid var(--border-light);
+  background: transparent;
+  padding: 7px 0;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.12s ease;
+}
+
+.hour-btn:last-child { border-right: none; }
+.hour-btn:hover { background-color: var(--bg-hover); color: var(--text-main); font-weight: 700; }
+.hour-btn.active { background-color: var(--brand-primary); color: #FFFFFF; font-weight: 700; }
+.hour-btn.cheap-slot { border-bottom: 3px solid var(--accent-good); }
+.hour-btn.peak-slot { border-bottom: 3px solid var(--accent-peak); }
+
+/* ==========================================================================
+   PLAIN-ENGLISH MARKET DRIVERS PANEL (NO RAW VARIABLE JARGON)
+   ========================================================================== */
+
+.hour-focus-banner {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  background-color: var(--bg-subtle);
+  border-bottom: 1px solid var(--border-light);
+  padding: 12px 16px;
+  gap: 10px;
+}
+
+.focus-stat-label {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-weight: 600;
+}
+
+.focus-stat-val {
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+.drivers-list {
+  padding: 12px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  height: 290px;
+  overflow-y: auto;
+}
+
+.driver-item {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 78px;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: var(--radius-sm);
+  background-color: var(--bg-subtle);
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: border-color 0.12s ease;
+}
+
+.driver-item:hover {
+  border-color: var(--border-strong);
+}
+
+.driver-name {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.driver-reading {
+  font-size: 11px;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+.driver-bar-wrap {
+  position: relative;
+  height: 8px;
+  background-color: var(--border-light);
+  border-radius: 99px;
+  overflow: hidden;
+}
+
+.driver-bar-center {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: var(--text-muted);
+}
+
+.driver-bar-fill {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  border-radius: 99px;
+}
+
+.driver-bar-fill.up { background-color: var(--accent-peak); }
+.driver-bar-fill.down { background-color: var(--accent-good); }
+
+.driver-impact {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  text-align: right;
+}
+
+.driver-impact.up { color: var(--accent-peak); }
+.driver-impact.down { color: var(--accent-good); }
+
+/* ==========================================================================
+   ACTIONABLE BIDDING WINDOWS & GENERATION MIX
+   ========================================================================== */
+
+.action-windows-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.window-panel {
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  background-color: var(--bg-subtle);
+}
+
+.window-panel.buy-panel { border-top: 3px solid var(--accent-good); }
+.window-panel.sell-panel { border-top: 3px solid var(--accent-peak); }
+
+.window-panel-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.window-panel-title {
+  font-size: 12.5px;
+  font-weight: 700;
+}
+
+.slot-pills-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.slot-pill-box {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-sm);
+  padding: 8px 6px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.1s ease, border-color 0.1s ease;
+}
+
+.slot-pill-box:hover {
+  transform: translateY(-1px);
+  border-color: var(--brand-primary);
+}
+
+.slot-time {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.slot-mcp {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  font-weight: 700;
+  margin: 3px 0;
+}
+
+.slot-sub {
+  font-size: 10px;
+  color: var(--text-muted);
+}
+
+/* ==========================================================================
+   TAB 2: SMART PROCUREMENT & BID OPTIMIZER CONTROLS
+   ========================================================================== */
+
+.form-group {
+  margin-bottom: 14px;
+}
+
+.form-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.form-val-badge {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--brand-primary);
+  background-color: var(--brand-primary-soft);
+  padding: 1px 7px;
+  border-radius: 4px;
+}
+
+input[type="range"].product-slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--border-strong);
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"].product-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  border: 2px solid #FFFFFF;
+  box-shadow: var(--shadow-sm);
+  cursor: pointer;
+}
+
+.slider-scale {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+/* Tables */
+.table-container {
+  overflow-x: auto;
+  width: 100%;
+}
+
+table.product-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+table.product-table th {
+  background-color: var(--bg-subtle);
+  color: var(--text-secondary);
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--border-strong);
+  text-align: right;
+}
+
+table.product-table th:first-child,
+table.product-table td:first-child {
+  text-align: left;
+}
+
+table.product-table td {
+  padding: 9px 14px;
+  border-bottom: 1px solid var(--border-light);
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+table.product-table tr:hover td {
+  background-color: var(--bg-hover);
+}
+
+table.product-table tr.highlight-row td {
+  background-color: var(--brand-primary-soft);
+  font-weight: 600;
+}
+
+/* ==========================================================================
+   UNIVERSAL POPOVER RECTANGULAR STATS BOX (ON HOVER)
+   ========================================================================== */
+
+.chart-popover-tooltip {
+  position: fixed;
+  z-index: 9999;
+  pointer-events: none;
+  min-width: 260px;
+  max-width: 340px;
+  background-color: var(--bg-card);
+  color: var(--text-main);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-pop);
+  font-size: 12px;
+  line-height: 1.45;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.08s ease, transform 0.08s ease;
+  overflow: hidden;
+}
+
+.chart-popover-tooltip.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.popover-header {
+  background-color: var(--bg-subtle);
+  color: var(--text-main);
+  padding: 8px 12px;
+  font-weight: 700;
+  font-size: 12px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popover-badge {
+  padding: 2px 7px;
+  border-radius: 99px;
+  font-size: 10px;
+  background-color: var(--brand-primary-soft);
+  color: var(--brand-primary);
+  font-weight: 700;
+}
+
+.popover-body {
+  padding: 10px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.popover-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.popover-key {
+  color: var(--text-secondary);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.popover-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.popover-val {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--text-main);
+  text-align: right;
+}
+
+@media (max-width: 1180px) {
+  .metrics-row { grid-template-columns: repeat(2, 1fr); }
+  .layout-main-sidebar, .layout-2col, .layout-sim { grid-template-columns: 1fr; }
+}

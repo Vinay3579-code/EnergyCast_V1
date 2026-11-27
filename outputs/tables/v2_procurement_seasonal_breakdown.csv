@@ -1,0 +1,5 @@
+Season,Days,Mean_Actual_MCP_Rs,Mean_Daily_Spread_Rs,Rule_ToU_Save_pct,Det_LP_Save_pct,Stoch_CVaR_Save_pct,Stoch_CVaR_Save_Lakhs_Day,Oracle_Save_pct,Stoch_CVaR_Win_Days_pct
+Winter (Jan-Feb 2025),59,4411.57,7101.47,3.78,8.88,8.88,9.404,8.96,100.0
+Spring Transition (Mar-Apr 2025),61,4828.91,7247.34,6.24,8.07,8.08,9.359,8.25,100.0
+Summer & Early Monsoon (May-Jun 2025),55,4073.74,7800.36,5.86,10.57,10.57,10.332,10.63,100.0
+Full Test Horizon (Jan-Jun 2025),175,4450.87,7371.97,5.31,9.06,9.06,9.68,9.17,100.0

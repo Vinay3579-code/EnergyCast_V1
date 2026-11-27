@@ -1,0 +1,56 @@
+Feature_Name,Category,Data_Type,Mathematical_Formula,Description
+timestamp,Index / Temporal,datetime64[us],t,Synchronized hourly timestamp (UTC+05:30 / IST)
+mcp_rs_per_mwh,Target Variable,float64,y_t,Market Clearing Price on IEX Day-Ahead Market in Rs/MWh (Forecasting Target)
+demand_mw,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+wind_generation_mw,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+solar_generation_mw,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+temperature_mean_c,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+temperature_max_c,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+temperature_min_c,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+humidity_mean_pct,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+apparent_temperature_mean_c,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+weather_wind_speed_mean_ms,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+precipitation_mean_mm,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+precipitation_max_mm,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+mcp_lag_1,Autoregressive Price Lag,float64,y_{t-1},Autoregressive price lag at t - 1 hours
+mcp_lag_2,Autoregressive Price Lag,float64,y_{t-2},Autoregressive price lag at t - 2 hours
+mcp_lag_24,Autoregressive Price Lag,float64,y_{t-24},Autoregressive price lag at t - 24 hours
+mcp_lag_48,Autoregressive Price Lag,float64,y_{t-48},Autoregressive price lag at t - 48 hours
+mcp_lag_168,Autoregressive Price Lag,float64,y_{t-168},Autoregressive price lag at t - 168 hours
+mcp_diff_1_2,Price Momentum,float64,y_{t-1} - y_{t-k},Price velocity / differencing momentum metric
+mcp_diff_24_25,Price Momentum,float64,y_{t-1} - y_{t-k},Price velocity / differencing momentum metric
+mcp_ratio_1_24,Price Momentum,float64,y_{t-1} / (y_{t-24} + eps),Price ratio relative to same-hour yesterday
+mcp_rolling_mean_24,Rolling Volatility Regime,float64,"f(y_{t-1}, ..., y_{t-W})",Moving statistical summary over past historical price (leakage-free shifted)
+mcp_rolling_std_24,Rolling Volatility Regime,float64,"f(y_{t-1}, ..., y_{t-W})",Moving statistical summary over past historical price (leakage-free shifted)
+mcp_rolling_min_24,Rolling Volatility Regime,float64,"f(y_{t-1}, ..., y_{t-W})",Moving statistical summary over past historical price (leakage-free shifted)
+mcp_rolling_max_24,Rolling Volatility Regime,float64,"f(y_{t-1}, ..., y_{t-W})",Moving statistical summary over past historical price (leakage-free shifted)
+mcp_zscore_24,Volatility Shock Indicator,float64,(y_{t-1} - mu_24) / (sigma_24 + eps),Standardized daily price shock z-score relative to 24h moving mean and std
+mcp_rolling_mean_168,Rolling Volatility Regime,float64,"f(y_{t-1}, ..., y_{t-W})",Moving statistical summary over past historical price (leakage-free shifted)
+mcp_rolling_std_168,Rolling Volatility Regime,float64,"f(y_{t-1}, ..., y_{t-W})",Moving statistical summary over past historical price (leakage-free shifted)
+net_demand_mw,Power System / Grid,float64,Demand_t - (Solar_t + Wind_t),Residual national power demand to be cleared by dispatchable generation
+re_penetration_pct,Power System / Renewables,float64,[(Solar_t + Wind_t) / Demand_t] * 100,Renewable energy generation share as a percentage of total national demand
+net_demand_lag_1,Power System / Grid,float64,Demand_t - (Solar_t + Wind_t),Residual national power demand to be cleared by dispatchable generation
+net_demand_lag_24,Power System / Grid,float64,Demand_t - (Solar_t + Wind_t),Residual national power demand to be cleared by dispatchable generation
+demand_lag_1,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+demand_lag_24,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+solar_lag_24,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+wind_lag_24,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+net_demand_ramp_1,Power System / Grid,float64,Demand_t - (Solar_t + Wind_t),Residual national power demand to be cleared by dispatchable generation
+purchase_bid_lag_24,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+sell_bid_lag_24,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+mcv_lag_24,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+market_tightness_lag_24,Market Liquidity,float64,PurchaseBid_{t-24} / (SellBid_{t-24} + eps),Market liquidity bidding pressure ratio (lagged buyer bids over seller bids)
+cdd_24,Meteorological Transformation,float64,"max(0, Temp - 24)",Cooling Degree Days representing meteorological cooling elasticity above 24°C
+temperature_sq,Meteorological Transformation,float64,Temp^2,Quadratic polynomial term capturing non-linear cooling demand response
+temperature_lag_24,Exogenous Input,float64,x_t,"Synchronized exogenous physical, market, or weather variable"
+hour_sin,Cyclical Calendar,float64,sin(2*pi*t / T) or cos(2*pi*t / T),Orthogonal continuous circular transformation of cyclical calendar integer
+hour_cos,Cyclical Calendar,float64,sin(2*pi*t / T) or cos(2*pi*t / T),Orthogonal continuous circular transformation of cyclical calendar integer
+day_of_week_sin,Cyclical Calendar,float64,sin(2*pi*t / T) or cos(2*pi*t / T),Orthogonal continuous circular transformation of cyclical calendar integer
+day_of_week_cos,Cyclical Calendar,float64,sin(2*pi*t / T) or cos(2*pi*t / T),Orthogonal continuous circular transformation of cyclical calendar integer
+month_sin,Cyclical Calendar,float64,sin(2*pi*t / T) or cos(2*pi*t / T),Orthogonal continuous circular transformation of cyclical calendar integer
+month_cos,Cyclical Calendar,float64,sin(2*pi*t / T) or cos(2*pi*t / T),Orthogonal continuous circular transformation of cyclical calendar integer
+is_weekend,Calendar Indicator,int64,I(condition),Binary calendar or operating regime indicator flag (0 or 1)
+is_peak_hour,Calendar Indicator,int64,I(condition),Binary calendar or operating regime indicator flag (0 or 1)
+is_solar_hour,Calendar Indicator,int64,I(condition),Binary calendar or operating regime indicator flag (0 or 1)
+net_demand_x_peak,Power System / Grid,float64,Demand_t - (Solar_t + Wind_t),Residual national power demand to be cleared by dispatchable generation
+net_demand_x_cdd,Power System / Grid,float64,Demand_t - (Solar_t + Wind_t),Residual national power demand to be cleared by dispatchable generation

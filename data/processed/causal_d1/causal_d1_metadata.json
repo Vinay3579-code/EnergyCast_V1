@@ -1,0 +1,243 @@
+{
+  "feature_count": 62,
+  "feature_cols": [
+    "mcp_d1_same_h",
+    "mcp_d2_same_h",
+    "mcp_d3_same_h",
+    "mcp_d7_same_h",
+    "mcp_d14_same_h",
+    "mcp_d1_prev_h",
+    "mcp_d1_next_h",
+    "mcp_d1_h23",
+    "mcp_d1_diff_d2",
+    "mcp_d1_diff_d7",
+    "mcp_d1_diurnal_slope",
+    "mcp_d1_day_mean",
+    "mcp_d1_day_std",
+    "mcp_d1_day_min",
+    "mcp_d1_day_max",
+    "mcp_d1_cap_hits",
+    "mcp_7d_same_h_mean",
+    "mcp_7d_rolling_mean",
+    "purchase_bid_d1",
+    "sell_bid_d1",
+    "mcv_d1",
+    "market_tightness_d1",
+    "market_tightness_d7",
+    "market_tightness_d1_day_mean",
+    "purchase_bid_d1_diff_d2",
+    "demand_fcst_mw",
+    "solar_fcst_mw",
+    "wind_fcst_mw",
+    "net_demand_fcst_mw",
+    "re_penetration_fcst_pct",
+    "net_demand_fcst_ramp_1",
+    "net_demand_fcst_ramp_3",
+    "net_demand_fcst_day_max",
+    "net_demand_fcst_vs_d2",
+    "demand_d2_same_h",
+    "net_demand_d2_same_h",
+    "solar_d2_same_h",
+    "wind_d2_same_h",
+    "demand_d1_morn_mean",
+    "demand_d1_morn_vs_d2",
+    "net_demand_fcst_x_peak",
+    "net_demand_fcst_x_cdd",
+    "temp_mean_fcst_c",
+    "temp_max_fcst_c",
+    "apparent_temp_fcst_c",
+    "humidity_fcst_pct",
+    "wind_speed_fcst_ms",
+    "precip_fcst_mm",
+    "cdd_24_fcst",
+    "temp_sq_fcst",
+    "temp_d1_morn_mean",
+    "temp_fcst_diff_d2",
+    "hour_sin",
+    "hour_cos",
+    "dow_sin",
+    "dow_cos",
+    "doy_sin",
+    "doy_cos",
+    "is_weekend",
+    "is_holiday_india",
+    "is_peak_hour",
+    "solar_elevation_deg"
+  ],
+  "train_hours": 15024,
+  "val_hours": 8784,
+  "test_hours": 4200,
+  "causality_gate": "10:30 AM IST on Day D-1 (zero same-day prices, zero Day-D realized telemetry, zero D-1 >10:00 SCADA)",
+  "stage1_metrics": [
+    {
+      "target": "demand_mw",
+      "val_2024": {
+        "MAE": 4139.78,
+        "RMSE": 5652.81,
+        "nRMSE_pct": 4.66,
+        "R2": 0.9219,
+        "MAPE_pct": 2.15
+      },
+      "test_2025": {
+        "MAE": 4808.36,
+        "RMSE": 7288.75,
+        "nRMSE_pct": 5.05,
+        "R2": 0.8611,
+        "MAPE_pct": 2.46
+      }
+    },
+    {
+      "target": "solar_generation_mw",
+      "val_2024": {
+        "MAE": 1656.03,
+        "RMSE": 3306.81,
+        "nRMSE_pct": 6.03,
+        "R2": 0.9644,
+        "MAPE_pct": null
+      },
+      "test_2025": {
+        "MAE": 3168.83,
+        "RMSE": 7228.28,
+        "nRMSE_pct": 11.17,
+        "R2": 0.9053,
+        "MAPE_pct": null
+      }
+    },
+    {
+      "target": "wind_generation_mw",
+      "val_2024": {
+        "MAE": 2088.13,
+        "RMSE": 2725.66,
+        "nRMSE_pct": 9.74,
+        "R2": 0.7715,
+        "MAPE_pct": 37.48
+      },
+      "test_2025": {
+        "MAE": 2295.83,
+        "RMSE": 2911.1,
+        "nRMSE_pct": 10.18,
+        "R2": 0.7485,
+        "MAPE_pct": 34.64
+      }
+    },
+    {
+      "target": "temperature_mean_c",
+      "val_2024": {
+        "MAE": 0.48,
+        "RMSE": 0.62,
+        "nRMSE_pct": 2.67,
+        "R2": 0.9776,
+        "MAPE_pct": null
+      },
+      "test_2025": {
+        "MAE": 0.48,
+        "RMSE": 0.63,
+        "nRMSE_pct": 3.06,
+        "R2": 0.9798,
+        "MAPE_pct": null
+      }
+    },
+    {
+      "target": "temperature_max_c",
+      "val_2024": {
+        "MAE": 0.86,
+        "RMSE": 1.25,
+        "nRMSE_pct": 5.3,
+        "R2": 0.9086,
+        "MAPE_pct": null
+      },
+      "test_2025": {
+        "MAE": 0.82,
+        "RMSE": 1.16,
+        "nRMSE_pct": 5.49,
+        "R2": 0.9278,
+        "MAPE_pct": null
+      }
+    },
+    {
+      "target": "apparent_temperature_mean_c",
+      "val_2024": {
+        "MAE": 0.66,
+        "RMSE": 0.84,
+        "nRMSE_pct": 3.08,
+        "R2": 0.9745,
+        "MAPE_pct": null
+      },
+      "test_2025": {
+        "MAE": 0.66,
+        "RMSE": 0.85,
+        "nRMSE_pct": 3.35,
+        "R2": 0.9766,
+        "MAPE_pct": null
+      }
+    },
+    {
+      "target": "humidity_mean_pct",
+      "val_2024": {
+        "MAE": 2.54,
+        "RMSE": 3.29,
+        "nRMSE_pct": 5.28,
+        "R2": 0.9428,
+        "MAPE_pct": null
+      },
+      "test_2025": {
+        "MAE": 2.97,
+        "RMSE": 3.88,
+        "nRMSE_pct": 6.16,
+        "R2": 0.9155,
+        "MAPE_pct": null
+      }
+    },
+    {
+      "target": "weather_wind_speed_mean_ms",
+      "val_2024": {
+        "MAE": 0.38,
+        "RMSE": 0.49,
+        "nRMSE_pct": 9.17,
+        "R2": 0.6963,
+        "MAPE_pct": null
+      },
+      "test_2025": {
+        "MAE": 0.33,
+        "RMSE": 0.42,
+        "nRMSE_pct": 8.59,
+        "R2": 0.6716,
+        "MAPE_pct": null
+      }
+    },
+    {
+      "target": "precipitation_mean_mm",
+      "val_2024": {
+        "MAE": 0.15,
+        "RMSE": 0.26,
+        "nRMSE_pct": 9.07,
+        "R2": 0.2165,
+        "MAPE_pct": null
+      },
+      "test_2025": {
+        "MAE": 0.12,
+        "RMSE": 0.2,
+        "nRMSE_pct": 6.86,
+        "R2": 0.2146,
+        "MAPE_pct": null
+      }
+    },
+    {
+      "target": "net_demand_mw (derived)",
+      "val_2024": {
+        "MAE": 5057.88,
+        "RMSE": 6729.44,
+        "nRMSE_pct": 6.53,
+        "R2": 0.8693,
+        "MAPE_pct": 3.05
+      },
+      "test_2025": {
+        "MAE": 6722.36,
+        "RMSE": 10203.55,
+        "nRMSE_pct": 7.23,
+        "R2": 0.7686,
+        "MAPE_pct": 4.24
+      }
+    }
+  ]
+}

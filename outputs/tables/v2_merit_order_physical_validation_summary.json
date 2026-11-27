@@ -1,0 +1,17 @@
+{
+  "p995_observed_coal_gw": 161.04,
+  "n_fuel_mix_hours": 15350,
+  "full_2022_2025_mcp_optimal_knee_gw": 148.0,
+  "full_2022_2025_mcp_supwald_F": 639.29,
+  "gas_dispatch_optimal_knee_gw": 174.0,
+  "gas_dispatch_supwald_F": 5641.4,
+  "gas_slope_below_mw_per_gw": 28.06,
+  "gas_slope_above_mw_per_gw": 173.12,
+  "coal_saturation_knee_gw": 167.0,
+  "coal_slope_below_160_gw_per_gw": 0.8121,
+  "coal_slope_above_160_gw_per_gw": 0.5437,
+  "hydro_slope_below_160_gw_per_gw": 0.1746,
+  "hydro_slope_above_160_gw_per_gw": 0.3512,
+  "gas_slope_below_160_gw_per_gw": 0.0165,
+  "gas_slope_above_160_gw_per_gw": 0.1078
+}

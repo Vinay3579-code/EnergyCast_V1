@@ -1,0 +1,6 @@
+Probabilistic_Model,Mean_Pinball_Rs,CRPS_Rs,PICP_50_pct,PICP_80_pct,PICP_90_pct,Width_90_Rs,PINAW_90_pct,Winkler_90_Rs,Peak_PICP_90_pct,Spike_PICP_90_pct,Kupiec_LR_p
+Homoskedastic Gaussian (Baseline),183.04,366.09,78.36,88.88,91.98,2719.1,27.19,4480.3,83.09,84.58,0.0
+Temporal Fusion Transformer (TFT-Q),167.7,335.4,37.24,60.29,72.9,1263.1,12.63,3875.7,71.43,68.44,0.0
+Residual LightGBM Quantile (Uncalibrated),147.55,295.1,40.02,68.83,82.36,1466.1,14.66,3036.5,82.06,87.46,0.0
+Residual-CQR (Regime Conformalized),145.37,290.73,49.02,81.67,90.69,1774.0,17.74,2906.3,88.8,91.5,0.1317
+Hybrid Residual-CQR + TFT-Q,145.87,291.74,43.88,75.71,86.57,1671.8,16.72,2959.0,80.23,73.92,0.0

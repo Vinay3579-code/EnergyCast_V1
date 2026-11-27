@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EnergyCast | IEX Day-Ahead Power Market Intelligence &amp; Bidding Platform</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- ====================================================================
+       TOP PRODUCT NAVIGATION BAR (COMMERCIAL SAAS HEADER)
+       ==================================================================== -->
+  <header class="product-navbar">
+    <div class="navbar-inner">
+      <div class="brand-identity">
+        <div class="brand-mark">EC</div>
+        <div>
+          <div class="brand-name">
+            EnergyCast
+            <span class="market-badge">IEX Day-Ahead Market</span>
+          </div>
+          <div style="font-size: 11px; color: var(--text-muted);">
+            AI Power Price Forecasting &amp; Automated Procurement Platform
+          </div>
+        </div>
+      </div>
+
+      <nav class="nav-tabs" role="tablist" aria-label="Product Workflows">
+        <button class="nav-tab active" data-tab="forecast" role="tab" aria-selected="true">
+          <span>1. Market Forecast &amp; Dispatch</span>
+        </button>
+        <button class="nav-tab" data-tab="optimizer" role="tab" aria-selected="false">
+          <span>2. Smart Bid &amp; Cost Optimizer</span>
+        </button>
+        <button class="nav-tab" data-tab="simulator" role="tab" aria-selected="false">
+          <span>3. Weather &amp; Grid Risk Simulator</span>
+        </button>
+        <button class="nav-tab" data-tab="trust" role="tab" aria-selected="false">
+          <span>4. Forecast Accuracy &amp; Trust</span>
+        </button>
+      </nav>
+
+      <div class="nav-actions">
+        <button id="btn-export-forecast" class="ui-btn" title="Download 24-Hour Price &amp; Dispatch Forecast CSV">
+          Export 24h CSV
+        </button>
+        <button id="btn-theme-toggle" class="ui-btn icon-btn" title="Switch Light / Dark Theme">
+          <span id="theme-label">Dark Mode</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ====================================================================
+       GLOBAL DELIVERY DATE & MARKET SCENARIO BAR
+       ==================================================================== -->
+  <section class="context-bar">
+    <div class="context-bar-inner">
+      <div class="date-selector-group">
+        <span class="context-label">Delivery Date:</span>
+        <button id="btn-prev-day" class="ui-btn icon-btn" title="Previous Delivery Day">&larr;</button>
+        <select id="select-date" class="ui-select num" aria-label="Select Delivery Date"></select>
+        <button id="btn-next-day" class="ui-btn icon-btn" title="Next Delivery Day">&rarr;</button>
+
+        <span class="context-label" style="margin-left: 8px;">Focus Hour:</span>
+        <select id="select-hour" class="ui-select num" aria-label="Select Focus Hour"></select>
+      </div>
+
+      <div class="scenario-chips" id="market-day-chips">
+        <span class="context-label" style="margin-right: 4px;">Notable Market Days:</span>
+        <button class="scenario-chip" data-date="2025-01-01" data-hour="18">
+          <span class="chip-dot" style="background: var(--accent-peak);"></span>
+          Jan 01: Evening Scarcity
+        </button>
+        <button class="scenario-chip" data-date="2025-01-06" data-hour="19">
+          <span class="chip-dot" style="background: var(--accent-peak);"></span>
+          Jan 06: &#8377;10k Peak Cap
+        </button>
+        <button class="scenario-chip" data-date="2025-03-16" data-hour="12">
+          <span class="chip-dot" style="background: var(--accent-good);"></span>
+          Mar 16: Solar Discount
+        </button>
+        <button class="scenario-chip" data-date="2025-05-18" data-hour="21">
+          <span class="chip-dot" style="background: var(--accent-solar);"></span>
+          May 18: Summer Heatwave
+        </button>
+        <button class="scenario-chip" data-date="2025-06-15" data-hour="15">
+          <span class="chip-dot" style="background: var(--brand-primary);"></span>
+          Jun 15: Monsoon Wind Surge
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================================================================
+       MAIN PRODUCT CONTAINER
+       ==================================================================== -->
+  <main class="app-container">
+
+    <!-- ==================================================================
+         WORKFLOW TAB 1: MARKET FORECAST & DISPATCH COMMAND CENTER
+         ================================================================== -->
+    <section id="tab-forecast" class="tab-pane active" role="tabpanel">
+
+      <!-- Dynamic Plain-English Trading Advisory Banner -->
+      <div id="advisory-banner" class="advisory-banner">
+        <div class="advisory-main">
+          <span id="advisory-badge" class="advisory-badge">DAILY TRADING ADVISORY</span>
+          <div class="advisory-text">
+            <h2 id="advisory-headline">Loading Market Intelligence...</h2>
+            <p id="advisory-summary">Analyzing 24-hour price curve, solar generation window, and evening ramp risk.</p>
+          </div>
+        </div>
+        <div>
+          <button id="btn-jump-optimizer" class="ui-btn primary">
+            Calculate My Cost Savings &rarr;
+          </button>
+        </div>
+      </div>
+
+      <!-- 4 Executive Summary KPI Cards -->
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">Expected 24h Avg Price</span>
+            <span id="kpi-avg-pill" class="metric-pill info">Day-Ahead</span>
+          </div>
+          <div>
+            <span id="kpi-avg-price" class="metric-val">&#8377;0,000</span>
+            <span class="metric-unit">/ MWh</span>
+          </div>
+          <div id="kpi-avg-sub" class="metric-foot">Equivalent to &#8377;0.00 / kWh</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">Best 4h Buying Window</span>
+            <span id="kpi-buy-pill" class="metric-pill good">Lowest Cost</span>
+          </div>
+          <div>
+            <span id="kpi-buy-window" class="metric-val">11:00–15:00</span>
+          </div>
+          <div id="kpi-buy-sub" class="metric-foot">Avg &#8377;0,000/MWh (Solar hours)</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">Peak Risk Window</span>
+            <span id="kpi-peak-pill" class="metric-pill peak">Avoid / Shave</span>
+          </div>
+          <div>
+            <span id="kpi-peak-window" class="metric-val">18:00–22:00</span>
+          </div>
+          <div id="kpi-peak-sub" class="metric-foot">Peak &#8377;0,000/MWh at evening ramp</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">Focus Hour AI Forecast</span>
+            <span id="kpi-focus-pill" class="metric-pill solar">18:00 IST</span>
+          </div>
+          <div>
+            <span id="kpi-focus-price" class="metric-val">&#8377;0,000</span>
+            <span class="metric-unit">/ MWh</span>
+          </div>
+          <div id="kpi-focus-sub" class="metric-foot">90% Band: &#8377;0,000 – &#8377;0,000</div>
+        </div>
+      </div>
+
+      <!-- Row 1: 24-Hour Price Curve (Left) + Plain-English Market Drivers (Right) -->
+      <div class="layout-main-sidebar">
+
+        <!-- Left: 24-Hour AI Price Forecast Chart -->
+        <div class="product-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">24-Hour Day-Ahead Price Forecast &amp; 90% Confidence Band</div>
+              <div class="card-subtitle">Hover any hour for detailed market stats, or click to inspect price drivers on the right</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 14px; font-size: 12px;">
+              <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 500;">
+                <input type="checkbox" id="toggle-show-actual" checked />
+                <span>Show Verified Actual Price</span>
+              </label>
+              <label style="display: inline-flex; align-items: center; gap: 6px; cursor: pointer; font-weight: 500;">
+                <input type="checkbox" id="toggle-show-zones" checked />
+                <span>Highlight Buy / Peak Zones</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="chart-toolbar">
+            <div class="legend-group">
+              <span class="legend-tag">
+                <span class="swatch-line" style="background: var(--brand-primary);"></span>
+                AI Forecast Price (&#8377;/MWh)
+              </span>
+              <span class="legend-tag">
+                <span class="swatch-box" style="background: rgba(13, 148, 136, 0.20); border: 1px solid var(--brand-primary);"></span>
+                90% Confidence Interval
+              </span>
+              <span class="legend-tag">
+                <span class="swatch-line" style="background: var(--accent-solar);"></span>
+                Verified Actual Clearing Price
+              </span>
+              <span class="legend-tag">
+                <span class="swatch-box" style="background: var(--accent-good-soft); border: 1px solid var(--accent-good);"></span>
+                Best Buy Window
+              </span>
+              <span class="legend-tag">
+                <span class="swatch-box" style="background: var(--accent-peak-soft); border: 1px solid var(--accent-peak);"></span>
+                Evening Peak Risk
+              </span>
+            </div>
+            <span id="day-accuracy-badge" class="mono" style="font-size: 11.5px; color: var(--text-secondary); font-weight: 600;">
+              Day MAE: &#8377;0/MWh
+            </span>
+          </div>
+
+          <div class="card-body flush">
+            <div class="chart-box h-290">
+              <canvas id="canvas-main-forecast" class="product-canvas"></canvas>
+            </div>
+            <div id="hour-timeline-bar" class="hour-timeline" aria-label="24-Hour Quick Selector"></div>
+          </div>
+        </div>
+
+        <!-- Right: Plain-English Price Drivers for Selected Hour -->
+        <div class="product-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">
+                What's Driving the Price at <span id="driver-hour-label" class="mono" style="color: var(--brand-primary);">18:00 IST</span>?
+              </div>
+              <div class="card-subtitle">Plain-English rupee breakdown of why this hour is above or below average</div>
+            </div>
+          </div>
+
+          <div class="hour-focus-banner">
+            <div>
+              <div class="focus-stat-label">Market Average Baseline</div>
+              <div id="driver-base-val" class="focus-stat-val">&#8377;3,873</div>
+            </div>
+            <div>
+              <div class="focus-stat-label">Net Market Pressure</div>
+              <div id="driver-shift-val" class="focus-stat-val">+&#8377;0</div>
+            </div>
+            <div>
+              <div class="focus-stat-label">AI Hour Forecast</div>
+              <div id="driver-final-val" class="focus-stat-val" style="color: var(--brand-primary);">&#8377;0,000</div>
+            </div>
+          </div>
+
+          <div id="drivers-list" class="drivers-list"></div>
+        </div>
+
+      </div>
+
+      <!-- Row 2: Optimal Action Windows (Left) + National Grid Supply & Renewable Mix (Right) -->
+      <div class="layout-2col">
+
+        <!-- Left: Actionable Procurement & Dispatch Windows -->
+        <div class="product-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Actionable Procurement &amp; Dispatch Windows</div>
+              <div class="card-subtitle">Click any slot below to inspect its hourly market conditions</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="action-windows-grid">
+              <div class="window-panel buy-panel">
+                <div class="window-panel-head">
+                  <span class="window-panel-title" style="color: var(--accent-good);">
+                    Best 4 Hours to Buy / Charge BESS
+                  </span>
+                  <span id="cheap-slots-avg" class="metric-pill good mono">Avg &#8377;0,000</span>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-secondary);">
+                  Schedule flexible industrial load, pumping, or battery charging during these low-cost hours:
+                </div>
+                <div id="cheap-slots-grid" class="slot-pills-grid"></div>
+              </div>
+
+              <div class="window-panel sell-panel">
+                <div class="window-panel-head">
+                  <span class="window-panel-title" style="color: var(--accent-peak);">
+                    Highest 4 Hours to Avoid / Dispatch
+                  </span>
+                  <span id="peak-slots-avg" class="metric-pill peak mono">Avg &#8377;0,000</span>
+                </div>
+                <div style="font-size: 11.5px; color: var(--text-secondary);">
+                  Curtail discretionary load, switch to captive power, or discharge storage during these peak hours:
+                </div>
+                <div id="peak-slots-grid" class="slot-pills-grid"></div>
+              </div>
+            </div>
+
+            <div style="margin-top: 14px; padding: 12px 14px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-light); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+              <div>
+                <div style="font-size: 12px; font-weight: 700; color: var(--text-main);">
+                  Peak-to-Trough Arbitrage Spread (4h Avg Spread)
+                </div>
+                <div id="arbitrage-note" style="font-size: 11.5px; color: var(--text-secondary);">
+                  Shifting 100 MW from the 4 peak hours to the 4 solar hours saves significant daily procurement cost.
+                </div>
+              </div>
+              <div id="arbitrage-spread-val" class="mono" style="font-size: 18px; font-weight: 700; color: var(--brand-primary);">
+                &#8377;0,000 / MWh
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: National Grid Generation & Net Load Curve -->
+        <div class="product-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">National Renewable Generation &amp; Net Thermal Demand (GW)</div>
+              <div class="card-subtitle">Mid-day solar surplus depresses clearing prices; evening solar drop triggers thermal ramp</div>
+            </div>
+          </div>
+          <div class="chart-toolbar">
+            <div class="legend-group">
+              <span class="legend-tag">
+                <span class="swatch-box" style="background: var(--accent-solar);"></span>
+                Solar Generation (GW)
+              </span>
+              <span class="legend-tag">
+                <span class="swatch-box" style="background: var(--brand-primary);"></span>
+                Wind + Hydro (GW)
+              </span>
+              <span class="legend-tag">
+                <span class="swatch-line" style="background: var(--accent-grid);"></span>
+                Net Thermal Demand (GW)
+              </span>
+              <span class="legend-tag">
+                <span class="swatch-line" style="background: var(--accent-peak);"></span>
+                160 GW Peaker Stress Threshold
+              </span>
+            </div>
+          </div>
+          <div class="card-body flush">
+            <div class="chart-box h-250">
+              <canvas id="canvas-gen-mix" class="product-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================================================================
+         WORKFLOW TAB 2: SMART PROCUREMENT & BID OPTIMIZER (ROI CALCULATOR)
+         ================================================================== -->
+    <section id="tab-optimizer" class="tab-pane" role="tabpanel">
+
+      <!-- Top 4 Financial ROI KPI Cards -->
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">Unoptimized Flat-Load Bill</span>
+            <span class="metric-pill info">Baseline</span>
+          </div>
+          <div>
+            <span id="opt-kpi-base-cost" class="metric-val">&#8377;00.0 L</span>
+          </div>
+          <div id="opt-kpi-base-sub" class="metric-foot">Buying flat MW across all 24 hours</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">AI-Optimized Daily Bill</span>
+            <span class="metric-pill good">Optimized</span>
+          </div>
+          <div>
+            <span id="opt-kpi-opt-cost" class="metric-val">&#8377;00.0 L</span>
+          </div>
+          <div id="opt-kpi-opt-sub" class="metric-foot">Shifting flexible MW to solar trough</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">Net Daily Cost Savings</span>
+            <span id="opt-kpi-save-pct" class="metric-pill good">-0.0% Bill</span>
+          </div>
+          <div>
+            <span id="opt-kpi-daily-save" class="metric-val" style="color: var(--accent-good);">&#8377;0.00 L</span>
+            <span class="metric-unit">/ day</span>
+          </div>
+          <div id="opt-kpi-save-sub" class="metric-foot">Direct procurement cost reduction</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">Projected Annualized Savings</span>
+            <span class="metric-pill solar">365-Day Run Rate</span>
+          </div>
+          <div>
+            <span id="opt-kpi-annual-save" class="metric-val" style="color: var(--brand-primary);">&#8377;0.00 Cr</span>
+            <span class="metric-unit">/ yr</span>
+          </div>
+          <div id="opt-kpi-annual-sub" class="metric-foot">At current daily spread efficiency</div>
+        </div>
+      </div>
+
+      <div class="layout-sim">
+
+        <!-- Left: Portfolio & Bidding Constraints Configuration -->
+        <div class="product-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Configure Your Procurement Portfolio</div>
+              <div class="card-subtitle">Customize your load profile to generate an optimal IEX DAM bid sheet</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="form-group">
+              <label class="form-label" for="opt-profile-select">
+                <span>Participant Profile</span>
+              </label>
+              <select id="opt-profile-select" class="ui-select" style="width: 100%;">
+                <option value="industrial">Industrial Open-Access Plant (Steel / Cement / Mfg)</option>
+                <option value="discom">State DISCOM Utility (Portfolio Procurement Desk)</option>
+                <option value="bess">Grid-Scale Battery Storage (BESS Arbitrage)</option>
+                <option value="datacenter">Hyperscale Data Center / EV Fleet Hub</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>Hourly Base Demand Requirement</span>
+                <span id="opt-val-mw" class="form-val-badge">100 MW</span>
+              </div>
+              <input type="range" id="opt-slider-mw" class="product-slider" min="10" max="500" step="10" value="100" />
+              <div class="slider-scale">
+                <span>10 MW</span>
+                <span>250 MW</span>
+                <span>500 MW</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>Shiftable Flexible Load Capacity</span>
+                <span id="opt-val-flex" class="form-val-badge">30%</span>
+              </div>
+              <input type="range" id="opt-slider-flex" class="product-slider" min="5" max="60" step="5" value="30" />
+              <div class="slider-scale">
+                <span>5% (Rigid)</span>
+                <span>30% (Moderate)</span>
+                <span>60% (Highly Flexible)</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>Maximum Exchange Bid Price Cap</span>
+                <span id="opt-val-cap" class="form-val-badge">&#8377;6,500 / MWh</span>
+              </div>
+              <input type="range" id="opt-slider-cap" class="product-slider" min="3500" max="10000" step="250" value="6500" />
+              <div class="slider-scale">
+                <span>&#8377;3,500</span>
+                <span>&#8377;6,500</span>
+                <span>&#8377;10,000 (Regulatory Cap)</span>
+              </div>
+            </div>
+
+            <div style="padding: 12px; background: var(--bg-subtle); border-radius: var(--radius-sm); border: 1px solid var(--border-light); margin-bottom: 14px; font-size: 12px; color: var(--text-secondary);">
+              <strong style="color: var(--text-main); display: block; margin-bottom: 4px;">How AI Bid Optimization Works:</strong>
+              EnergyCast shifts your flexible load out of the 6 highest-priced evening scarcity hours and reallocates that exact energy volume into the 6 lowest-priced solar afternoon hours—keeping total daily energy (`MWh`) 100% neutral while protecting against price spikes above your cap.
+            </div>
+
+            <button id="btn-download-bidsheet" class="ui-btn primary" style="width: 100%; padding: 10px;">
+              Download Official IEX DAM 24h Bid Sheet (.CSV)
+            </button>
+          </div>
+        </div>
+
+        <!-- Right: 24-Hour Optimized Load Schedule Chart & Bid Sheet Table -->
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+
+          <div class="product-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">24-Hour AI-Optimized Procurement Schedule (MW) vs. Clearing Price</div>
+                <div class="card-subtitle">Hover any hour bar to inspect baseline MW, optimized MW, recommended limit price, and hourly rupee savings</div>
+              </div>
+            </div>
+            <div class="chart-toolbar">
+              <div class="legend-group">
+                <span class="legend-tag">
+                  <span class="swatch-box" style="background: var(--accent-good);"></span>
+                  Solar Load-Shift Boost (Buy More)
+                </span>
+                <span class="legend-tag">
+                  <span class="swatch-box" style="background: var(--accent-grid);"></span>
+                  Standard Base Procurement
+                </span>
+                <span class="legend-tag">
+                  <span class="swatch-box" style="background: var(--accent-peak);"></span>
+                  Evening Peak Shaved (Buy Less)
+                </span>
+                <span class="legend-tag">
+                  <span class="swatch-line" style="background: var(--accent-solar);"></span>
+                  AI Forecast Price (&#8377;/MWh)
+                </span>
+              </div>
+            </div>
+            <div class="card-body flush">
+              <div class="chart-box h-270">
+                <canvas id="canvas-bid-optimizer" class="product-canvas"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Generated 24-Hour IEX Day-Ahead Bid Schedule</div>
+                <div class="card-subtitle">Ready for exchange upload — includes safety bid limit (P95 band) and volume adjustments</div>
+              </div>
+            </div>
+            <div class="card-body flush">
+              <div class="table-container" style="max-height: 290px; overflow-y: auto;">
+                <table class="product-table">
+                  <thead>
+                    <tr>
+                      <th>Delivery Block</th>
+                      <th>AI Forecast (&#8377;/MWh)</th>
+                      <th>Recommended Bid Limit</th>
+                      <th>Flat Load (MW)</th>
+                      <th>Optimized Bid (MW)</th>
+                      <th>Dispatch Action</th>
+                      <th>Hourly Cost Impact</th>
+                    </tr>
+                  </thead>
+                  <tbody id="opt-schedule-tbody"></tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================================================================
+         WORKFLOW TAB 3: WEATHER & GRID RISK SIMULATOR (STRESS TESTING)
+         ================================================================== -->
+    <section id="tab-simulator" class="tab-pane" role="tabpanel">
+
+      <div class="layout-sim">
+
+        <!-- Left: Weather & Grid Shock Controls -->
+        <div class="product-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Grid Weather &amp; Demand Stress Controls</div>
+              <div class="card-subtitle">Simulate sudden weather or demand shocks on <span id="sim-target-label" class="mono" style="font-weight: 700; color: var(--brand-primary);">2026-01-01 18:00</span></div>
+            </div>
+          </div>
+          <div class="card-body">
+
+            <div style="margin-bottom: 14px;">
+              <div class="context-label" style="margin-bottom: 6px;">1-Click Weather &amp; Market Shock Scenarios:</div>
+              <div class="scenario-chips">
+                <button class="scenario-chip sim-preset" data-demand="0" data-solar="-40" data-wind="0" data-ramp="25" data-temp="0" data-liq="15">
+                  Monsoon Cloud Cover (-40% Solar)
+                </button>
+                <button class="scenario-chip sim-preset" data-demand="12" data-solar="0" data-wind="-15" data-ramp="30" data-temp="4" data-liq="20">
+                  Summer Heatwave (+12% Load)
+                </button>
+                <button class="scenario-chip sim-preset" data-demand="-5" data-solar="25" data-wind="40" data-ramp="-20" data-temp="-2" data-liq="-15">
+                  High Renewable Surplus
+                </button>
+                <button class="scenario-chip sim-preset" data-demand="8" data-solar="-15" data-wind="-25" data-ramp="40" data-temp="2" data-liq="35">
+                  Evening Peaker Squeeze
+                </button>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>National Grid Demand Shift</span>
+                <span id="sim-val-demand" class="form-val-badge">0%</span>
+              </div>
+              <input type="range" id="sim-demand" class="product-slider" min="-20" max="25" step="1" value="0" />
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>Solar Generation Output</span>
+                <span id="sim-val-solar" class="form-val-badge">0%</span>
+              </div>
+              <input type="range" id="sim-solar" class="product-slider" min="-60" max="50" step="5" value="0" />
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>Wind Generation Output</span>
+                <span id="sim-val-wind" class="form-val-badge">0%</span>
+              </div>
+              <input type="range" id="sim-wind" class="product-slider" min="-60" max="60" step="5" value="0" />
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>Evening Thermal Ramp Stress</span>
+                <span id="sim-val-ramp" class="form-val-badge">0%</span>
+              </div>
+              <input type="range" id="sim-ramp" class="product-slider" min="-40" max="60" step="5" value="0" />
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>Ambient Temperature Anomaly</span>
+                <span id="sim-val-temp" class="form-val-badge">0.0 &deg;C</span>
+              </div>
+              <input type="range" id="sim-temp" class="product-slider" min="-5" max="6" step="0.5" value="0" />
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>Buyer-to-Seller Order Book Pressure</span>
+                <span id="sim-val-liq" class="form-val-badge">0%</span>
+              </div>
+              <input type="range" id="sim-liq" class="product-slider" min="-40" max="50" step="5" value="0" />
+            </div>
+
+            <div style="display: flex; gap: 10px; margin-top: 8px;">
+              <button id="btn-sim-run" class="ui-btn primary" style="flex: 1;">Run Stress Test</button>
+              <button id="btn-sim-reset" class="ui-btn">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Stress Test Results & Merit Order Curve -->
+        <div style="display: flex; flex-direction: column; gap: 18px;">
+
+          <div class="metrics-row" style="margin-bottom: 0;">
+            <div class="metric-card">
+              <div class="metric-top">
+                <span class="metric-title">Baseline Hour Forecast</span>
+              </div>
+              <div id="sim-kpi-base" class="metric-val">&#8377;0,000</div>
+              <div class="metric-foot">Before weather/grid shock</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-top">
+                <span class="metric-title">Stress-Tested Forecast</span>
+              </div>
+              <div id="sim-kpi-new" class="metric-val" style="color: var(--brand-primary);">&#8377;0,000</div>
+              <div id="sim-kpi-band" class="metric-foot">90% Band: &#8377;0,000 – &#8377;0,000</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-top">
+                <span class="metric-title">Net Clearing Price Shock</span>
+              </div>
+              <div id="sim-kpi-delta" class="metric-val">+&#8377;0</div>
+              <div id="sim-kpi-pct" class="metric-foot">0.0% change vs baseline</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-top">
+                <span class="metric-title">Grid Supply Regime</span>
+              </div>
+              <div id="sim-kpi-regime" class="metric-val" style="font-size: 16px;">Coal Base-Load</div>
+              <div id="sim-kpi-netload" class="metric-foot">Net Thermal Load: 000 GW</div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">National Grid Supply Stack (Merit-Order Curve) &amp; Stress Shift</div>
+                <div class="card-subtitle">Shows how net thermal demand (total load minus solar &amp; wind) pushes clearing prices toward the 160 GW peaker threshold</div>
+              </div>
+            </div>
+            <div class="chart-toolbar">
+              <div class="legend-group">
+                <span class="legend-tag">
+                  <span class="swatch-line" style="background: var(--text-muted);"></span>
+                  National Supply Cost Curve
+                </span>
+                <span class="legend-tag">
+                  <span class="swatch-box" style="background: var(--accent-grid);"></span>
+                  Baseline Operating Point
+                </span>
+                <span class="legend-tag">
+                  <span class="swatch-box" style="background: var(--accent-peak);"></span>
+                  Stress-Tested Operating Point
+                </span>
+              </div>
+            </div>
+            <div class="card-body flush">
+              <div class="chart-box h-250">
+                <canvas id="canvas-sim-merit" class="product-canvas"></canvas>
+              </div>
+            </div>
+          </div>
+
+          <div class="product-card">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Which Market Drivers Changed Under This Stress Scenario?</div>
+                <div class="card-subtitle">Comparison of rupee price impact before vs. after your simulated weather/demand shock</div>
+              </div>
+            </div>
+            <div id="sim-drivers-compare" class="card-body" style="gap: 8px;"></div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================================================================
+         WORKFLOW TAB 4: FORECAST ACCURACY & MODEL TRUST SCORECARD
+         ================================================================== -->
+    <section id="tab-trust" class="tab-pane" role="tabpanel">
+
+      <div class="metrics-row">
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">Out-of-Sample Accuracy (R&sup2;)</span>
+            <span class="metric-pill good">Verified</span>
+          </div>
+          <div class="metric-val">93.2%</div>
+          <div class="metric-foot">Explains 93.2% of IEX price variance</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">Average Forecast Error</span>
+            <span class="metric-pill info">4,200 Test Hours</span>
+          </div>
+          <div>
+            <span class="metric-val">&#8377;429</span>
+            <span class="metric-unit">/ MWh</span>
+          </div>
+          <div class="metric-foot">Equivalent to just &#8377;0.43 / kWh</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">Gain vs. Market Baseline</span>
+            <span class="metric-pill good">+34.2% Skill</span>
+          </div>
+          <div>
+            <span class="metric-val" style="color: var(--accent-good);">-&#8377;223</span>
+            <span class="metric-unit">/ MWh Error</span>
+          </div>
+          <div class="metric-foot">Outperforms 24h Naive Persistence (&#8377;652)</div>
+        </div>
+
+        <div class="metric-card">
+          <div class="metric-top">
+            <span class="metric-title">Data Coverage &amp; Signals</span>
+            <span class="metric-pill solar">5 Live Streams</span>
+          </div>
+          <div class="metric-val">53 Signals</div>
+          <div class="metric-foot">IEX DAM + National Load + Solar/Wind + Weather</div>
+        </div>
+      </div>
+
+      <div class="layout-2col">
+
+        <!-- Left: 24-Hour Diurnal Error Profile -->
+        <div class="product-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Hourly Forecast Accuracy Across the 24-Hour Day (MAE in &#8377;/MWh)</div>
+              <div class="card-subtitle">Hover any hour to compare EnergyCast AI against standard market persistence and linear models</div>
+            </div>
+          </div>
+          <div class="chart-toolbar">
+            <div class="legend-group">
+              <span class="legend-tag">
+                <span class="swatch-line" style="background: var(--brand-primary);"></span>
+                EnergyCast AI Production Engine
+              </span>
+              <span class="legend-tag">
+                <span class="swatch-line" style="background: var(--accent-grid);"></span>
+                Linear Econometric Baseline
+              </span>
+              <span class="legend-tag">
+                <span class="swatch-line" style="background: var(--accent-peak);"></span>
+                Yesterday Same-Hour Baseline (24h Naive)
+              </span>
+            </div>
+          </div>
+          <div class="card-body flush">
+            <div class="chart-box h-270">
+              <canvas id="canvas-trust-accuracy" class="product-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Top 12 Market Signals Powering EnergyCast -->
+        <div class="product-card">
+          <div class="card-header">
+            <div>
+              <div class="card-title">Top 12 Market Signals Powering the Forecast Engine</div>
+              <div class="card-subtitle">Average rupee impact (&#8377;/MWh) of each market signal across 175 verified test days</div>
+            </div>
+          </div>
+          <div class="card-body flush">
+            <div class="chart-box h-290">
+              <canvas id="canvas-trust-signals" class="product-canvas"></canvas>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Verified Backtest Comparison Table -->
+      <div class="product-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Verified Out-of-Sample Accuracy Scorecard (4,200 Hours | Jan – Jun 2026)</div>
+            <div class="card-subtitle">Independent backtest across winter peak, spring solar transition, summer heatwave, and monsoon wind regimes</div>
+          </div>
+        </div>
+        <div class="card-body flush">
+          <div class="table-container">
+            <table class="product-table">
+              <thead>
+                <tr>
+                  <th>Forecasting Engine / Baseline</th>
+                  <th>Model Category</th>
+                  <th>Avg Error (MAE &#8377;/MWh)</th>
+                  <th>Per-Unit Error (&#8377;/kWh)</th>
+                  <th>Root Mean Sq Error (RMSE)</th>
+                  <th>Variance Explained (R&sup2;)</th>
+                  <th>Accuracy Gain vs. Baseline</th>
+                  <th>Production Status</th>
+                </tr>
+              </thead>
+              <tbody id="trust-benchmark-tbody"></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ====================================================================
+       UNIVERSAL HOVER POPOVER STATS BOX (SHOWS ON ALL CHARTS & BARS)
+       ==================================================================== -->
+  <div id="chart-popover-tooltip" class="chart-popover-tooltip" role="tooltip" aria-hidden="true"></div>
+
+  <!-- Embedded Offline Dataset (All 175 Test Days / 4,200 Hours) -->
+  <script src="embedded_data.js"></script>
+  <!-- Product Application Controller -->
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+Profile_ID,Profile_Label,Gamma_pct,Policy,Lambda,Base_Bill_Lakhs,Sim_Expected_Save_Lakhs,Sim_Expected_Save_pct,Realized_Save_Lakhs,Realized_Save_pct,Top20_Scarcity_Save_pct,Annual_Realized_Cr,Oracle_Capture_pct,Win_Days_pct,ExAnte_CVaR90_Lakhs,Realized_CVaR90_Bill_Lakhs,CVaR90_Reduction_Lakhs,Worst5pct_Save_Lakhs
+P1_Flat_Industrial_100MW,Continuous Industrial (100 MW Flat),30,Rule-Based ToU Heuristic,0.0,106.821,5.712,5.29,5.672,5.31,6.24,20.7,57.9,100.0,113.066,135.972,9.392,2.58
+P1_Flat_Industrial_100MW,Continuous Industrial (100 MW Flat),30,Deterministic LP (Unconstrained),0.0,106.821,13.252,12.28,13.006,12.18,15.4,47.47,132.8,100.0,104.857,124.148,21.216,5.777
+P1_Flat_Industrial_100MW,Continuous Industrial (100 MW Flat),30,Deterministic LP (Constrained),0.0,106.821,9.852,9.13,9.679,9.06,10.99,35.33,98.8,100.0,108.697,131.938,13.425,4.443
+P1_Flat_Industrial_100MW,Continuous Industrial (100 MW Flat),30,Stochastic CVaR LP (lam=0.5),0.5,106.821,9.842,9.12,9.675,9.06,10.97,35.31,98.8,100.0,108.688,131.885,13.479,4.436
+P1_Flat_Industrial_100MW,Continuous Industrial (100 MW Flat),30,Stochastic CVaR LP (lam=2.0),2.0,106.821,9.84,9.12,9.677,9.06,10.97,35.32,98.8,100.0,108.68,131.864,13.499,4.443
+P1_Flat_Industrial_100MW,Continuous Industrial (100 MW Flat),30,Ex-Post Perfect Oracle (Constrained),0.0,106.821,9.709,9.0,9.796,9.17,11.05,35.76,100.0,100.0,108.834,131.764,13.599,4.471
+P2_TwoShift_Mfg_100MW,Two-Shift Manufacturing (100 MW Avg),25,Rule-Based ToU Heuristic,0.0,102.685,5.111,4.92,5.092,4.96,7.07,18.58,63.8,100.0,109.679,127.025,5.735,2.119
+P2_TwoShift_Mfg_100MW,Two-Shift Manufacturing (100 MW Avg),25,Deterministic LP (Unconstrained),0.0,102.685,11.014,10.6,10.844,10.56,13.5,39.58,135.9,100.0,103.2,117.104,15.656,5.315
+P2_TwoShift_Mfg_100MW,Two-Shift Manufacturing (100 MW Avg),25,Deterministic LP (Constrained),0.0,102.685,8.018,7.72,7.844,7.64,9.5,28.63,98.3,100.0,106.576,121.789,10.971,3.747
+P2_TwoShift_Mfg_100MW,Two-Shift Manufacturing (100 MW Avg),25,Stochastic CVaR LP (lam=0.5),0.5,102.685,8.008,7.71,7.843,7.64,9.5,28.63,98.3,100.0,106.561,121.796,10.964,3.737
+P2_TwoShift_Mfg_100MW,Two-Shift Manufacturing (100 MW Avg),25,Stochastic CVaR LP (lam=2.0),2.0,102.685,8.005,7.7,7.837,7.63,9.5,28.6,98.2,100.0,106.551,121.791,10.969,3.636
+P2_TwoShift_Mfg_100MW,Two-Shift Manufacturing (100 MW Avg),25,Ex-Post Perfect Oracle (Constrained),0.0,102.685,7.871,7.57,7.981,7.77,9.61,29.13,100.0,100.0,106.728,121.643,11.117,3.893
+P3_State_DISCOM_350MW,State DISCOM Portfolio (350 MW Avg),20,Rule-Based ToU Heuristic,0.0,371.251,12.196,3.25,12.119,3.26,3.71,44.23,58.0,100.0,401.507,477.563,19.948,5.566
+P3_State_DISCOM_350MW,State DISCOM Portfolio (350 MW Avg),20,Deterministic LP (Unconstrained),0.0,371.251,31.217,8.32,30.686,8.27,10.53,112.0,146.7,100.0,380.778,447.242,50.27,13.992
+P3_State_DISCOM_350MW,State DISCOM Portfolio (350 MW Avg),20,Deterministic LP (Constrained),0.0,371.251,21.02,5.6,20.586,5.55,6.43,75.14,98.4,100.0,392.256,470.906,26.606,9.436
+P3_State_DISCOM_350MW,State DISCOM Portfolio (350 MW Avg),20,Stochastic CVaR LP (lam=0.5),0.5,371.251,20.991,5.6,20.577,5.54,6.42,75.1,98.4,100.0,392.222,470.781,26.731,9.306
+P3_State_DISCOM_350MW,State DISCOM Portfolio (350 MW Avg),20,Stochastic CVaR LP (lam=2.0),2.0,371.251,20.981,5.59,20.568,5.54,6.42,75.07,98.4,100.0,392.203,470.733,26.779,9.23
+P3_State_DISCOM_350MW,State DISCOM Portfolio (350 MW Avg),20,Ex-Post Perfect Oracle (Constrained),0.0,371.251,20.64,5.5,20.912,5.63,6.49,76.33,100.0,100.0,392.63,470.406,27.106,9.654
+P4_Hybrid_ColdDC_80MW,Cold-Storage / Data Center (80 MW Avg),35,Rule-Based ToU Heuristic,0.0,84.191,6.374,7.49,6.323,7.51,9.97,23.08,60.0,100.0,87.237,101.096,9.908,2.676
+P4_Hybrid_ColdDC_80MW,Cold-Storage / Data Center (80 MW Avg),35,Deterministic LP (Unconstrained),0.0,84.191,12.56,14.76,12.362,14.68,18.78,45.12,117.3,100.0,80.45,91.336,19.668,5.73
+P4_Hybrid_ColdDC_80MW,Cold-Storage / Data Center (80 MW Avg),35,Deterministic LP (Constrained),0.0,84.191,10.605,12.46,10.414,12.37,15.95,38.01,98.8,100.0,82.704,95.478,15.526,4.886
+P4_Hybrid_ColdDC_80MW,Cold-Storage / Data Center (80 MW Avg),35,Stochastic CVaR LP (lam=0.5),0.5,84.191,10.597,12.45,10.418,12.37,15.95,38.03,98.8,100.0,82.695,95.417,15.586,4.84
+P4_Hybrid_ColdDC_80MW,Cold-Storage / Data Center (80 MW Avg),35,Stochastic CVaR LP (lam=2.0),2.0,84.191,10.594,12.45,10.408,12.36,15.95,37.99,98.7,100.0,82.69,95.465,15.538,4.879
+P4_Hybrid_ColdDC_80MW,Cold-Storage / Data Center (80 MW Avg),35,Ex-Post Perfect Oracle (Constrained),0.0,84.191,10.487,12.32,10.541,12.52,16.07,38.47,100.0,100.0,82.827,95.276,15.727,4.944

@@ -1,0 +1,66 @@
+Feature,Category,Mean_Abs_SHAP_Rs,Std_SHAP_Rs,Corr_Feature_SHAP
+mcp_d1_diff_d7,D-1 Published Price Memory,95.36,145.25,-0.855
+mcp_d1_diff_d2,D-1 Published Price Memory,86.9,189.79,-0.715
+dow_cos,Calendar & Astronomical,70.16,114.4,0.348
+dow_sin,Calendar & Astronomical,66.51,86.11,0.691
+net_demand_fcst_vs_d2,Stage-1 Grid & RE Forecasts,62.05,86.36,0.697
+demand_d1_morn_vs_d2,Stage-1 Grid & RE Forecasts,61.82,74.49,0.761
+mcp_d1_same_h,D-1 Published Price Memory,59.06,66.74,-0.945
+nd_fcst_rel_30d,Stage-1 Grid & RE Forecasts,46.02,68.34,0.757
+nd_fcst_zscore_30d,Stage-1 Grid & RE Forecasts,38.93,50.07,0.849
+mcp_d1_rel_30d,D-1 Published Price Memory,26.04,31.82,-0.939
+mcp_d1_day_min,D-1 Published Price Memory,15.24,23.86,-0.759
+net_demand_fcst_mw,Stage-1 Grid & RE Forecasts,14.6,22.05,0.763
+is_weekend,Calendar & Astronomical,14.35,17.46,-0.901
+mcp_d1_day_mean,D-1 Published Price Memory,13.54,26.72,-0.699
+demand_d1_morn_mean,Stage-1 Grid & RE Forecasts,11.92,11.99,0.766
+net_demand_fcst_day_max,Stage-1 Grid & RE Forecasts,11.6,12.59,0.566
+demand_fcst_mw,Stage-1 Grid & RE Forecasts,11.33,13.46,0.585
+market_tightness_d1,D-1 Order-Book Liquidity,10.59,21.67,0.478
+purchase_bid_d1_diff_d2,D-1 Order-Book Liquidity,10.55,20.23,-0.533
+temp_d1_morn_mean,Stage-1 Weather Forecasts,10.39,14.71,0.444
+mcp_d1_day_std,D-1 Published Price Memory,9.4,13.53,0.136
+doy_cos,Calendar & Astronomical,8.93,11.76,-0.261
+purchase_bid_d1,D-1 Order-Book Liquidity,8.46,13.54,0.527
+is_holiday_india,Calendar & Astronomical,6.82,20.09,-0.921
+market_tightness_d1_day_mean,D-1 Order-Book Liquidity,6.81,9.62,-0.427
+mcp_d14_same_h,D-1 Published Price Memory,6.61,8.55,0.749
+mcp_d1_diurnal_slope,D-1 Published Price Memory,6.6,13.85,-0.562
+hour_cos,Calendar & Astronomical,6.47,10.46,0.26
+market_tightness_d7,D-1 Order-Book Liquidity,6.45,8.85,0.314
+mcp_7d_rolling_mean,D-1 Published Price Memory,5.86,8.43,-0.23
+mcp_d2_same_h,D-1 Published Price Memory,5.74,7.24,-0.826
+hour_sin,Calendar & Astronomical,5.33,8.9,0.146
+solar_d2_same_h,Stage-1 Grid & RE Forecasts,5.18,6.44,-0.459
+mcp_d1_prev_h,D-1 Published Price Memory,4.86,6.64,-0.638
+mcp_d1_day_max,D-1 Published Price Memory,4.84,6.45,-0.788
+wind_fcst_mw,Stage-1 Grid & RE Forecasts,4.48,8.21,-0.681
+net_demand_fcst_ramp_3,Stage-1 Grid & RE Forecasts,4.43,8.37,0.464
+solar_fcst_mw,Stage-1 Grid & RE Forecasts,4.28,6.78,-0.781
+mcp_7d_same_h_mean,D-1 Published Price Memory,4.15,4.91,-0.741
+doy_sin,Calendar & Astronomical,3.95,5.77,-0.192
+re_penetration_fcst_pct,Stage-1 Grid & RE Forecasts,3.67,5.88,-0.774
+mcp_d7_same_h,D-1 Published Price Memory,3.55,4.41,-0.368
+mcp_d1_next_h,D-1 Published Price Memory,3.02,5.09,-0.246
+mcp_d1_cap_hits,D-1 Published Price Memory,2.87,4.54,-0.65
+apparent_temp_fcst_c,Stage-1 Weather Forecasts,2.79,4.66,0.252
+wind_d2_same_h,Stage-1 Grid & RE Forecasts,2.59,3.77,0.699
+net_demand_d2_same_h,Stage-1 Grid & RE Forecasts,2.45,4.49,0.109
+humidity_fcst_pct,Stage-1 Weather Forecasts,2.26,4.09,-0.023
+mcp_d1_h23,D-1 Published Price Memory,2.24,3.26,0.027
+mcp_d3_same_h,D-1 Published Price Memory,2.11,2.47,-0.149
+precip_fcst_mm,Stage-1 Weather Forecasts,1.99,2.42,-0.745
+sell_bid_d1,D-1 Order-Book Liquidity,1.86,2.88,-0.106
+demand_d2_same_h,Stage-1 Grid & RE Forecasts,1.66,2.33,-0.431
+wind_speed_fcst_ms,Stage-1 Weather Forecasts,1.62,2.3,-0.715
+temp_max_fcst_c,Stage-1 Weather Forecasts,1.4,2.56,-0.251
+mcv_d1,D-1 Order-Book Liquidity,1.3,2.3,-0.496
+net_demand_fcst_x_peak,Stage-1 Grid & RE Forecasts,1.29,3.54,0.296
+solar_elevation_deg,Calendar & Astronomical,1.0,1.6,-0.505
+net_demand_fcst_ramp_1,Stage-1 Grid & RE Forecasts,0.87,2.94,0.103
+temp_fcst_diff_d2,Stage-1 Weather Forecasts,0.83,1.5,-0.227
+temp_mean_fcst_c,Stage-1 Weather Forecasts,0.52,0.82,-0.315
+net_demand_fcst_x_cdd,Stage-1 Grid & RE Forecasts,0.39,0.76,0.241
+temp_sq_fcst,Stage-1 Weather Forecasts,0.2,0.3,-0.64
+cdd_24_fcst,Stage-1 Weather Forecasts,0.14,0.26,-0.066
+is_peak_hour,Calendar & Astronomical,0.03,0.1,-0.433

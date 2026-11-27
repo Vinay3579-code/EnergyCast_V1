@@ -1,0 +1,6 @@
+Information_Regime,Same_Day_Price_Lags,Delivery_Day_Grid_Weather,Test_MAE,Test_RMSE,Test_sMAPE,Test_R2,Peak_MAE,Note
+1. Strict Operational D-1 — Static Frozen 2022-2023 (LightGBM),No (Removed),Stage-1 Causal D-1 Forecast,626.89,1112.79,15.87,0.829,1006.33,Shows cost of skipping operational recalibration under thermal capacity drift
+2. Strict Operational D-1 — Expanding Recalibrated (LightGBM),No (Removed),Stage-1 Causal D-1 Forecast,496.71,948.64,12.47,0.8757,791.75,"Deployable single-model GBDT strictly respecting F_{D-1,10:30}"
+3. Strict Operational D-1 — Expanding Hybrid Champion (GBDT+TFT),No (Removed),Stage-1 Causal D-1 Forecast,481.19,875.27,12.45,0.8942,754.18,"Primary deployable champion strictly respecting F_{D-1,10:30}"
+"4. Ex-Post Perfect-Exogenous Upper Bound (LightGBM, No P_{t-1})",No (Removed),Realized Ex-Post Day-D (Oracle),491.84,930.62,12.47,0.8804,788.44,Value of Perfect Day-Ahead Grid/RE Forecast: DeltaMAE = Rs.4.87/MWh (DM=+0.77)
+5. Legacy V1 Contemporaneous Specification (Audited Leakage),Yes (Inadmissible P_{t-1}),Realized Ex-Post Day-D,433.33,703.43,11.88,0.9317,617.63,Superseded V1 benchmark; transparently audited to quantify intraday look-ahead bias

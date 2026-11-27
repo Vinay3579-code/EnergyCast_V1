@@ -1,0 +1,5 @@
+Model,Split,Hyperparameters,MAE,RMSE,sMAPE,R2
+Linear Regression (OLS),Validation (2024),None,483.26,761.52,11.01,0.914
+Linear Regression (OLS),Test (2025),None,561.12,834.66,16.81,0.9038
+Ridge Regression (alpha=50.0) ★,Validation (2024),alpha=50.0,477.93,757.93,10.81,0.9148
+Ridge Regression (alpha=50.0) ★,Test (2025),alpha=50.0,544.61,825.53,15.55,0.9059

@@ -1,0 +1,15 @@
+Model_1,Model_2,DM_HAC_L9,p_value,Sig_1pct
+Weekly S-Naive (168h),EnergyCast Hybrid Ensemble (GBDT+TFT),13.196,0.0,Yes
+Daily S-Naive (24h Ref.),EnergyCast Hybrid Ensemble (GBDT+TFT),9.641,0.0,Yes
+SARIMAX (24-Eq. Seasonal),EnergyCast Hybrid Ensemble (GBDT+TFT),14.294,0.0,Yes
+OLS Linear Regression,EnergyCast Hybrid Ensemble (GBDT+TFT),15.366,0.0,Yes
+LASSO L1 (alpha=60),EnergyCast Hybrid Ensemble (GBDT+TFT),14.107,0.0,Yes
+"Elastic Net (a=1.5, l1=0.2)",EnergyCast Hybrid Ensemble (GBDT+TFT),12.959,0.0,Yes
+Tikhonov Ridge (alpha=2500),EnergyCast Hybrid Ensemble (GBDT+TFT),15.64,0.0,Yes
+Random Forest (220 Trees),EnergyCast Hybrid Ensemble (GBDT+TFT),4.273,1.9250000295345515e-05,Yes
+XGBoost Regressor,EnergyCast Hybrid Ensemble (GBDT+TFT),3.894,9.842329428089158e-05,Yes
+CatBoost Regressor,EnergyCast Hybrid Ensemble (GBDT+TFT),5.516,3.469963338886828e-08,Yes
+LightGBM Regressor,EnergyCast Hybrid Ensemble (GBDT+TFT),2.279,0.022678726612845646,Yes (5%)
+N-BEATS (Multi-Stack Neural),EnergyCast Hybrid Ensemble (GBDT+TFT),9.364,0.0,Yes
+Temporal Fusion Transformer (TFT),EnergyCast Hybrid Ensemble (GBDT+TFT),4.227,2.370634696680085e-05,Yes
+EnergyCast Hybrid Ensemble (GBDT+TFT),EnergyCast Hybrid Ensemble (GBDT+TFT),0.0,1.0,Ref/No

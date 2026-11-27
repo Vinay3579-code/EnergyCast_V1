@@ -1,0 +1,10 @@
+Split,Model,Predictor_Feature,MAE,RMSE,sMAPE,R2,Observations
+Validation (2024),Daily_Seasonal_Naive_24h,mcp_lag_24,629.84,1185.06,14.97,0.7918,8784
+Validation (2024),Weekly_Seasonal_Naive_168h,mcp_lag_168,903.6,1572.19,20.05,0.6335,8784
+Validation (2024),Simple_Persistence_1h,mcp_lag_1,751.5,1393.66,15.58,0.712,8784
+Test (2025),Daily_Seasonal_Naive_24h,mcp_lag_24,658.42,1254.07,16.52,0.7828,4200
+Test (2025),Weekly_Seasonal_Naive_168h,mcp_lag_168,986.82,1750.12,23.21,0.577,4200
+Test (2025),Simple_Persistence_1h,mcp_lag_1,877.87,1580.71,18.45,0.6549,4200
+Train (2022-2023),Daily_Seasonal_Naive_24h,mcp_lag_24,803.66,1396.76,14.87,0.7795,15192
+Train (2022-2023),Weekly_Seasonal_Naive_168h,mcp_lag_168,1449.67,2275.88,25.15,0.4146,15192
+Train (2022-2023),Simple_Persistence_1h,mcp_lag_1,764.51,1331.1,13.48,0.7998,15192

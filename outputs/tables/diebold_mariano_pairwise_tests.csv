@@ -1,0 +1,22 @@
+Model_1,Model_2,DM_Statistic,p_value_two_sided,p_value_one_sided_M1_better,Significance_at_1%,Superior_Model
+Weekly Seasonal Naive (168h),Daily Seasonal Naive (24h),5.973650673307861,2.512172025959103e-09,0.999999998743914,Yes (p < 0.01),Daily Seasonal Naive (24h)
+Weekly Seasonal Naive (168h),Persistence Naive (1h),1.8260374238508454,0.06791560377795847,0.9660421981110208,No,Persistence Naive (1h)
+Weekly Seasonal Naive (168h),Linear Regression (OLS),8.91422424268247,0.0,1.0,Yes (p < 0.01),Linear Regression (OLS)
+Weekly Seasonal Naive (168h),Ridge Regression (alpha=50),9.238898850429146,0.0,1.0,Yes (p < 0.01),Ridge Regression (alpha=50)
+Weekly Seasonal Naive (168h),XGBoost Regressor,11.964805620697293,0.0,1.0,Yes (p < 0.01),XGBoost Regressor
+Weekly Seasonal Naive (168h),LightGBM Regressor (Champion),11.889403013851432,0.0,1.0,Yes (p < 0.01),LightGBM Regressor (Champion)
+Daily Seasonal Naive (24h),Persistence Naive (1h),-5.196971956832234,2.1218230528141646e-07,1.0609115265784534e-07,Yes (p < 0.01),Daily Seasonal Naive (24h)
+Daily Seasonal Naive (24h),Linear Regression (OLS),3.4477512349386137,0.0005708274035494121,0.9997145862982253,Yes (p < 0.01),Linear Regression (OLS)
+Daily Seasonal Naive (24h),Ridge Regression (alpha=50),4.05835356229784,5.031884940520648e-05,0.9999748405752974,Yes (p < 0.01),Ridge Regression (alpha=50)
+Daily Seasonal Naive (24h),XGBoost Regressor,7.531077565735455,6.128431095930864e-14,0.9999999999999694,Yes (p < 0.01),XGBoost Regressor
+Daily Seasonal Naive (24h),LightGBM Regressor (Champion),7.780408516415206,9.103828801926284e-15,0.9999999999999954,Yes (p < 0.01),LightGBM Regressor (Champion)
+Persistence Naive (1h),Linear Regression (OLS),14.965848069501368,0.0,1.0,Yes (p < 0.01),Linear Regression (OLS)
+Persistence Naive (1h),Ridge Regression (alpha=50),16.051942843869657,0.0,1.0,Yes (p < 0.01),Ridge Regression (alpha=50)
+Persistence Naive (1h),XGBoost Regressor,17.88116636268325,0.0,1.0,Yes (p < 0.01),XGBoost Regressor
+Persistence Naive (1h),LightGBM Regressor (Champion),18.685038819742175,0.0,1.0,Yes (p < 0.01),LightGBM Regressor (Champion)
+Linear Regression (OLS),Ridge Regression (alpha=50),9.803665524590464,0.0,1.0,Yes (p < 0.01),Ridge Regression (alpha=50)
+Linear Regression (OLS),XGBoost Regressor,11.02586973660748,0.0,1.0,Yes (p < 0.01),XGBoost Regressor
+Linear Regression (OLS),LightGBM Regressor (Champion),11.916888124953358,0.0,1.0,Yes (p < 0.01),LightGBM Regressor (Champion)
+Ridge Regression (alpha=50),XGBoost Regressor,9.54218943651213,0.0,1.0,Yes (p < 0.01),XGBoost Regressor
+Ridge Regression (alpha=50),LightGBM Regressor (Champion),10.448995052861198,0.0,1.0,Yes (p < 0.01),LightGBM Regressor (Champion)
+XGBoost Regressor,LightGBM Regressor (Champion),2.5144813712147416,0.011957842702753352,0.9940210786486233,Yes (p < 0.05),LightGBM Regressor (Champion)
